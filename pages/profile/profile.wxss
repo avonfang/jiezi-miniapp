@@ -1,0 +1,361 @@
+.page {
+  min-height: 100vh;
+  background: transparent;
+  padding-bottom: 160rpx;
+  position: relative;
+}
+
+/* ── User Card ── */
+.user-card {
+  margin: 24rpx;
+  border-radius: var(--radius-lg);
+  padding: 48rpx 32rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.user-card-inner {
+  border-radius: var(--radius-md);
+  padding: 40rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 20rpx rgba(91, 111, 230, 0.3);
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+
+.avatar-text {
+  font-size: 48rpx;
+  color: #fff;
+  font-weight: 700;
+}
+
+.login-btn {
+  margin-top: 20rpx;
+  background: #07C160;
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: 600;
+  padding: 16rpx 48rpx;
+  border-radius: 999px;
+  text-align: center;
+}
+
+.login-btn:active {
+  opacity: 0.85;
+}
+
+.profile-editor {
+  margin-top: 20rpx;
+  width: 100%;
+}
+
+.nickname-input {
+  width: 100%;
+  border: 2rpx solid rgba(255,255,255,0.3);
+  border-radius: var(--radius-sm);
+  padding: 20rpx 24rpx;
+  font-size: 26rpx;
+  background: rgba(255,255,255,0.9);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.editor-actions {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 16rpx;
+  justify-content: center;
+}
+
+.btn-sm {
+  padding: 14rpx 36rpx;
+  font-size: 24rpx;
+  border-radius: var(--radius-sm);
+  min-width: 120rpx;
+  text-align: center;
+}
+
+.edit-profile-hint {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+}
+
+.edit-profile-hint:active {
+  opacity: 0.7;
+}
+
+.username {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.user-id {
+  font-size: 22rpx;
+  color: var(--color-text-muted);
+  margin-top: 6rpx;
+}
+
+/* ── Credit Card (Glass) ── */
+.credit-card {
+  margin: 0 24rpx 20rpx;
+  border-radius: var(--radius-md);
+  padding: 32rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.credit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.credit-label {
+  font-size: 28rpx;
+  color: var(--color-text);
+}
+
+.credit-badge-text {
+  font-size: 48rpx;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.credit-bar {
+  height: 10rpx;
+  background: rgba(200, 196, 216, 0.25);
+  border-radius: 999px;
+  margin-top: 16rpx;
+  overflow: hidden;
+}
+
+.credit-fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.credit-hint {
+  display: block;
+  font-size: 22rpx;
+  color: var(--color-warning);
+  margin-top: 12rpx;
+}
+
+/* ── Menu (Glass) ── */
+.menu-card {
+  margin: 0 24rpx 20rpx;
+  border-radius: var(--radius-md);
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 32rpx;
+  border-bottom: 1rpx solid rgba(200, 196, 216, 0.15);
+  font-size: 28rpx;
+  transition: background 0.15s;
+}
+
+.menu-item:last-child { border-bottom: none; }
+.menu-item:active { background: rgba(255,255,255,0.3); }
+
+/* Button reset for share button */
+.menu-btn-share {
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  line-height: inherit;
+  padding: 28rpx 32rpx;
+  border-bottom: 1rpx solid rgba(200, 196, 216, 0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.menu-btn-share:last-child { border-bottom: none; }
+.menu-btn-share::after { display: none; }
+
+.menu-left {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.menu-icon-wrap {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: rgba(238, 240, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-emoji {
+  font-size: 28rpx;
+}
+
+.menu-label {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.menu-arrow {
+  color: #D8D6E6;
+  font-size: 40rpx;
+  font-weight: 300;
+}
+
+/* ── Logout ── */
+.menu-item-logout {
+  border-bottom: none !important;
+}
+
+.icon-wrap-logout {
+  background: rgba(245, 107, 107, 0.1) !important;
+}
+
+.label-logout {
+  color: #F56B6B !important;
+}
+
+/* ── Feedback ── */
+.feedback-card {
+  margin: 0 24rpx 24rpx;
+  border-radius: var(--radius-md);
+  padding: 28rpx 32rpx 32rpx;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.feedback-header {
+  margin-bottom: 8rpx;
+}
+
+.feedback-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ── Feedback Type Picker ── */
+.fb-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22rpx 0;
+  border-bottom: 1rpx solid rgba(200, 196, 216, 0.12);
+  margin-bottom: 20rpx;
+}
+
+.fb-label {
+  font-size: 26rpx;
+  color: var(--color-text);
+}
+
+.fb-picker {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.fb-picker-text {
+  font-size: 26rpx;
+  color: var(--color-text);
+}
+
+.fb-picker-text.ph {
+  color: var(--color-text-muted);
+}
+
+/* ── Textarea ── */
+.fb-textarea-wrap {
+  position: relative;
+  margin-bottom: 16rpx;
+}
+
+.fb-textarea {
+  width: 100%;
+  height: 220rpx;
+  padding: 20rpx 24rpx 48rpx;
+  box-sizing: border-box;
+}
+
+.fb-counter {
+  position: absolute;
+  bottom: 14rpx;
+  right: 16rpx;
+  font-size: 20rpx;
+  color: #B0AEC0;
+}
+
+/* ── Contact Input ── */
+.fb-contact {
+  display: block;
+  width: 100%;
+  height: 80rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  border: 1rpx solid rgba(200, 196, 216, 0.2);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.5);
+  box-sizing: border-box;
+  margin-bottom: 4rpx;
+}
+
+/* ── Shared Glass Input ── */
+.glass-input {
+  border: 1rpx solid rgba(200, 196, 216, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 20rpx 24rpx;
+  font-size: 26rpx;
+  background: rgba(255,255,255,0.5);
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.glass-input:focus {
+  border-color: rgba(91, 111, 230, 0.3);
+}
+
+.feedback-msg {
+  display: block;
+  font-size: 24rpx;
+  color: var(--color-success);
+  margin-top: 12rpx;
+}

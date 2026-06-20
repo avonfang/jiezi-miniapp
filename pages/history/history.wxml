@@ -1,0 +1,78 @@
+<view class="page">
+
+  <!-- Background blobs -->
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:5%;right:-25%;width:450rpx;height:450rpx"></view>
+    <view class="blob blob-purple animate-float" style="bottom:30%;left:-20%;width:380rpx;height:380rpx;animation-delay:-4s"></view>
+  </view>
+
+  <view class="empty-state" wx:if="{{list.length === 0}}"><!-- Empty state -->
+    <view class="empty-glass glass-card">
+      <view class="empty-icon-wrap">
+        <text class="empty-icon">✦</text>
+      </view>
+      <text class="empty-title">还没有验证记录</text>
+      <text class="empty-sub">开始验证你的第一个产品想法吧</text>
+      <button class="btn-primary mt-lg" bindtap="goHome">开始验证</button>
+    </view>
+  </view>
+
+  <view wx:else class="animate-fade-up"><!-- Content -->
+
+    <!-- Empty filter state -->
+    <view class="empty-filter" wx:if="{{filter && filteredList.length === 0}}">
+      <view class="glass-card">
+        <text class="empty-filter-text">该分类下暂无记录</text>
+      </view>
+    </view>
+
+    <!-- Stats row (glass) -->
+    <view class="stats-row">
+      <view class="stat-card stat-all glass-card">
+        <text class="stat-count">{{list.length}}</text>
+        <text class="stat-label">全部</text>
+      </view>
+      <view class="stat-card stat-try">
+        <text class="stat-count">{{stats.try}}</text>
+        <text class="stat-label">建议做</text>
+      </view>
+      <view class="stat-card stat-explore">
+        <text class="stat-count">{{stats.explore}}</text>
+        <text class="stat-label">值得探索</text>
+      </view>
+      <view class="stat-card stat-no">
+        <text class="stat-count">{{stats.no}}</text>
+        <text class="stat-label">不建议</text>
+      </view>
+    </view>
+
+    <!-- Filters (glass pills) -->
+    <scroll-view class="filters" scroll-x show-scrollbar="{{false}}">
+      <view class="filter-pill {{filter === '' ? 'active' : ''}}" bindtap="setFilter" data-filter="">全部</view>
+      <view class="filter-pill {{filter === '建议尝试' ? 'active' : ''}}" bindtap="setFilter" data-filter="建议尝试">建议做</view>
+      <view class="filter-pill {{filter === '值得探索' ? 'active' : ''}}" bindtap="setFilter" data-filter="值得探索">值得探索</view>
+      <view class="filter-pill {{filter === '暂不建议' ? 'active' : ''}}" bindtap="setFilter" data-filter="暂不建议">不建议</view>
+    </scroll-view>
+
+    <!-- History list -->
+    <view class="list">
+      <view class="glass-card history-card verdict-{{item.verdictClass}}" wx:for="{{filteredList}}" wx:key="index" bindtap="restoreItem" bindlongpress="deleteItem" data-index="{{item.originalIndex}}">
+        <view class="hc-top">
+          <view class="hc-verdict verdict-{{item.verdictClass}}">{{item.verdict}}</view>
+          <view class="hc-badges">
+            <text wx:if="{{item.hasPrd}}" class="tag tag-blue">PRD</text>
+            <text wx:if="{{item.hasPreview}}" class="tag tag-blue">预览</text>
+          </view>
+        </view>
+        <text class="hc-idea">{{item.idea}}</text>
+        <view class="hc-bottom">
+          <text class="hc-time">{{item.timeStr}}</text>
+          <text class="hc-arrow">→</text>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <bottom-tab activeTab="history" />
+</view>

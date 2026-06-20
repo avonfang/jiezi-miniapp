@@ -1,0 +1,252 @@
+<scroll-view class="page" scroll-y>
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:0;right:-20%;width:400rpx;height:400rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:20%;left:-15%;width:350rpx;height:350rpx"></view>
+  </view>
+
+  <view class="page-content">
+    <!-- ═══ Loading State ═══ -->
+    <view wx:if="{{generating}}" class="glass-card">
+      <view class="loading-wrap">
+        <view class="timeline-card">
+          <view class="tl-step {{timelineStep >= 1 ? 'active' : ''}} {{timelineStep > 1 ? 'done' : ''}}">
+            <view class="tl-dot-wrap">
+              <view class="tl-dot">
+                <text wx:if="{{timelineStep > 1}}" class="tl-check">✓</text>
+                <text wx:elif="{{timelineStep === 1}}" class="tl-num tl-spin">⟳</text>
+                <text wx:else class="tl-num">1</text>
+              </view>
+              <view class="tl-line" wx:if="{{timelineStep < 4}}"></view>
+            </view>
+            <view class="tl-content">
+              <text class="tl-label">分析产品数据</text>
+              <text class="tl-desc" wx:if="{{timelineStep === 1}}">从 PRD 中提取关键信息</text>
+            </view>
+          </view>
+          <view class="tl-step {{timelineStep >= 2 ? 'active' : ''}} {{timelineStep > 2 ? 'done' : ''}}">
+            <view class="tl-dot-wrap">
+              <view class="tl-dot">
+                <text wx:if="{{timelineStep > 2}}" class="tl-check">✓</text>
+                <text wx:elif="{{timelineStep === 2}}" class="tl-num tl-spin">⟳</text>
+                <text wx:else class="tl-num">2</text>
+              </view>
+              <view class="tl-line" wx:if="{{timelineStep < 4}}"></view>
+            </view>
+            <view class="tl-content">
+              <text class="tl-label">设计页面布局</text>
+              <text class="tl-desc" wx:if="{{timelineStep === 2}}">规划页面结构和视觉风格</text>
+            </view>
+          </view>
+          <view class="tl-step {{timelineStep >= 3 ? 'active' : ''}} {{timelineStep > 3 ? 'done' : ''}}">
+            <view class="tl-dot-wrap">
+              <view class="tl-dot">
+                <text wx:if="{{timelineStep > 3}}" class="tl-check">✓</text>
+                <text wx:elif="{{timelineStep === 3}}" class="tl-num tl-spin">⟳</text>
+                <text wx:else class="tl-num">3</text>
+              </view>
+              <view class="tl-line" wx:if="{{timelineStep < 4}}"></view>
+            </view>
+            <view class="tl-content">
+              <text class="tl-label">AI 生成内容</text>
+              <text class="tl-desc" wx:if="{{timelineStep === 3}}">生成页面文案和素材</text>
+            </view>
+          </view>
+          <view class="tl-step {{timelineStep >= 4 ? 'active' : ''}} {{timelineStep > 4 ? 'done' : ''}}">
+            <view class="tl-dot-wrap">
+              <view class="tl-dot">
+                <text wx:if="{{timelineStep > 4}}" class="tl-check">✓</text>
+                <text wx:elif="{{timelineStep === 4}}" class="tl-num tl-spin">⟳</text>
+                <text wx:else class="tl-num">4</text>
+              </view>
+            </view>
+            <view class="tl-content">
+              <text class="tl-label">生成预览页面</text>
+              <text class="tl-desc" wx:if="{{timelineStep === 4}}">组装所有内容，生成产品预览</text>
+            </view>
+          </view>
+        </view>
+        <text class="loading-text">{{loadingText}}</text>
+      </view>
+    </view>
+
+    <!-- ═══ Error State ═══ -->
+    <view wx:elif="{{error}}" class="glass-card">
+      <view class="empty-wrap">
+        <text class="empty-icon">⚡</text>
+        <text class="empty-text">{{error}}</text>
+        <view class="btn-w">
+          <button class="btn-p btn-fill" bindtap="retry" wx:if="{{!generating}}">重新生成</button>
+          <button class="btn-p btn-out" bindtap="goBack">返回</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- ═══ Product Landing Page ═══ -->
+    <view wx:elif="{{isFallback}}" class="lp-wrap">
+
+      <!-- ── Hero ── -->
+      <view class="lp-hero">
+        <view class="lp-hero-glow"></view>
+        <view class="lp-hero-badge">AI 驱动 · 智能产品</view>
+        <text class="lp-hero-title">{{fbData.name}}</text>
+        <text wx:if="{{fbData.tagline}}" class="lp-hero-desc">{{fbData.tagline}}</text>
+        <view class="lp-hero-actions">
+          <view class="lp-btn-primary">免费开始使用</view>
+          <view class="lp-btn-secondary">了解更多</view>
+        </view>
+        <view class="lp-hero-stats" wx:if="{{fbData.features.length}}">
+          <view class="lp-stat">
+            <text class="lp-stat-num">{{fbData.features.length}}+</text>
+            <text class="lp-stat-lbl">核心功能</text>
+          </view>
+          <view class="lp-stat">
+            <text class="lp-stat-num">{{fbData.techTags.length || '多'}}种</text>
+            <text class="lp-stat-lbl">技术栈</text>
+          </view>
+          <view class="lp-stat">
+            <text class="lp-stat-num">AI</text>
+            <text class="lp-stat-lbl">驱动</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- ── Positioning ── -->
+      <view wx:if="{{fbData.positioning}}" class="lp-section">
+        <view class="lp-label-row">
+          <text class="lp-label-icon">🎯</text>
+          <text class="lp-label-text">产品定位</text>
+        </view>
+        <text class="lp-body">{{fbData.positioning}}</text>
+      </view>
+
+      <!-- ── Target Users ── -->
+      <view wx:if="{{fbData.targetUsers}}" class="lp-section lp-section-alt">
+        <view class="lp-label-row">
+          <text class="lp-label-icon">👥</text>
+          <text class="lp-label-text">目标用户</text>
+        </view>
+        <text class="lp-body">{{fbData.targetUsers}}</text>
+      </view>
+
+      <!-- ── User Flow ── -->
+      <view wx:if="{{fbData.userFlow}}" class="lp-section">
+        <view class="lp-label-row">
+          <text class="lp-label-icon">🔄</text>
+          <text class="lp-label-text">用户流程</text>
+        </view>
+        <text class="lp-body">{{fbData.userFlow}}</text>
+      </view>
+
+      <!-- ── Features ── -->
+      <view wx:if="{{fbData.hasFeatures}}" class="lp-section">
+        <view class="lp-label-row">
+          <text class="lp-label-icon">⚡</text>
+          <text class="lp-label-text">核心功能</text>
+        </view>
+        <view class="lp-features">
+          <view wx:for="{{fbData.features}}" wx:for-item="f" wx:for-index="idx" wx:key="title" class="lp-feature" bindtap="onFeatureTap" data-index="{{idx}}">
+            <view class="lp-f-icon-wrap" style="background: {{f.iconBg}};">
+              <text class="lp-f-icon">{{f.icon}}</text>
+            </view>
+            <view class="lp-f-body">
+              <text class="lp-f-title">{{f.title}}</text>
+              <text class="lp-f-desc">{{f.desc}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- ── User Story ── -->
+      <view wx:if="{{fbData.userStory}}" class="lp-section lp-section-quote">
+        <view class="lp-quote">
+          <text class="lp-quote-mark">"</text>
+          <view class="lp-quote-body">
+            <text class="lp-quote-text">{{fbData.userStory}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- ── Data Models ── -->
+      <view wx:if="{{fbData.hasDataModels}}" class="lp-section">
+        <view class="lp-label-row">
+          <text class="lp-label-icon">🗃️</text>
+          <text class="lp-label-text">数据架构</text>
+        </view>
+        <view class="lp-models">
+          <view wx:for="{{fbData.dataModels}}" wx:for-item="m" wx:key="entity" class="lp-model">
+            <text class="lp-model-name">{{m.entity}}</text>
+            <text wx:if="{{m.fields}}" class="lp-model-fields">{{m.fields}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- ── Tech Stack ── -->
+      <view wx:if="{{fbData.techTags.length}}" class="lp-section">
+        <view class="lp-label-row">
+          <text class="lp-label-icon">🛠</text>
+          <text class="lp-label-text">技术栈</text>
+        </view>
+        <view class="lp-tags">
+          <view wx:for="{{fbData.techTags}}" wx:for-item="tag" wx:key="*this" class="lp-tag">{{tag}}</view>
+        </view>
+      </view>
+
+      <!-- ── Pricing Suggestion ── -->
+      <view wx:if="{{fbData.pricingSuggestion}}" class="lp-section lp-section-alt">
+        <view class="lp-label-row">
+          <text class="lp-label-icon">💰</text>
+          <text class="lp-label-text">定价建议</text>
+        </view>
+        <text class="lp-body">{{fbData.pricingSuggestion}}</text>
+      </view>
+
+      <!-- ── Next Steps ── -->
+      <view wx:if="{{fbData.hasNextSteps}}" class="lp-section">
+        <view class="lp-label-row">
+          <text class="lp-label-icon">📋</text>
+          <text class="lp-label-text">下一步行动</text>
+        </view>
+        <view class="lp-steps">
+          <view wx:for="{{fbData.nextSteps}}" wx:for-item="step" wx:for-index="i" wx:key="*this" class="lp-step">
+            <view class="lp-step-num">{{i + 1}}</view>
+            <text class="lp-step-text">{{step}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- ── CTA ── -->
+      <view class="lp-cta">
+        <text class="lp-cta-title">准备好开始了吗？</text>
+        <text class="lp-cta-desc">立即体验 {{fbData.name}}，开启你的高效之旅</text>
+        <view class="lp-cta-btn">免费开始使用</view>
+      </view>
+
+      <!-- ── Footer ── -->
+      <view class="lp-footer">
+        <text class="lp-footer-text">© 2026 {{fbData.name}}</text>
+        <text class="lp-footer-sub">Generated by 芥子 · AI 产品创意验证器</text>
+      </view>
+
+      <!-- ── Action Buttons ── -->
+      <view class="btn-w">
+        <button class="btn-p btn-fill" bindtap="retry">重新生成</button>
+        <button class="btn-p btn-out" bindtap="goBack">返回 PRD</button>
+      </view>
+    </view>
+
+    <!-- ═══ Rich Text Fallback ═══ -->
+    <view wx:elif="{{previewHtml}}" class="rich-wrap">
+      <view class="rich-header" wx:if="{{productName}}">
+        <text class="rich-header-text">{{productName}}</text>
+        <text class="rich-header-badge">产品预览</text>
+      </view>
+      <view class="rich-body">
+        <rich-text nodes="{{previewHtml}}"></rich-text>
+      </view>
+      <view class="btn-w">
+        <button class="btn-p btn-out" bindtap="goBack">返回</button>
+      </view>
+    </view>
+  </view>
+  <bottom-tab activeTab="" />
+</scroll-view>

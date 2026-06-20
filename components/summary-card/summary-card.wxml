@@ -1,0 +1,113 @@
+<view class="card summary-card verdict-{{verdictClass}}">
+  <!-- ═══ 核心结论 ═══ -->
+  <view class="sc-section">
+    <view class="sc-section-head">
+      <text class="sc-section-icon">📌</text>
+      <text class="sc-section-title">核心结论</text>
+    </view>
+
+    <!-- Verdict badge — prominent standalone -->
+    <view class="verdict-badge verdict-{{verdictClass}}">
+      <text class="verdict-text">{{report.verdict}}</text>
+    </view>
+
+    <!-- Reason — structured points or single paragraph -->
+    <view class="verdict-reason" wx:if="{{reasonPoints.length > 1}}">
+      <view class="vr-point" wx:for="{{reasonPoints}}" wx:for-index="i" wx:key="i">
+        <text class="vr-dot">•</text>
+        <text class="vr-text">{{item}}。</text>
+      </view>
+    </view>
+    <text class="verdict-reason verdict-reason-single" wx:else>{{report.verdict_reason}}</text>
+
+    <!-- Sharp comment — prominent AI insight -->
+    <view class="sharp-comment" wx:if="{{report.sharp_comment}}">
+      <view class="sharp-head">
+        <text class="sharp-icon">🤖</text>
+        <text class="sharp-label">AI 洞察</text>
+      </view>
+      <text class="sharp-body">{{report.sharp_comment}}</text>
+    </view>
+  </view>
+
+  <!-- ═══ 数据验证 ═══ -->
+  <view class="sc-section">
+    <view class="sc-section-head">
+      <text class="sc-section-icon">📊</text>
+      <text class="sc-section-title">数据验证</text>
+    </view>
+
+    <!-- Scores -->
+    <view class="scores-row">
+      <view class="score-item">
+        <text class="score-label">市场前景</text>
+        <view class="score-bar-bg">
+          <view class="score-bar-fill" style="width: {{report.market_score * 10}}%"></view>
+        </view>
+        <text class="score-num">{{report.market_score}}/10</text>
+      </view>
+      <view class="score-item">
+        <text class="score-label">开发可行性</text>
+        <view class="score-bar-bg">
+          <view class="score-bar-fill fill-green" style="width: {{report.feasibility_score * 10}}%"></view>
+        </view>
+        <text class="score-num">{{report.feasibility_score}}/10</text>
+      </view>
+    </view>
+
+    <!-- Metrics 2×2 -->
+    <view class="metrics-grid" wx:if="{{report.summary}}">
+      <view class="metric-item">
+        <text class="metric-icon">📊</text>
+        <text class="metric-label">市场机会</text>
+        <text class="metric-value">{{report.summary.market_opportunity}}</text>
+      </view>
+      <view class="metric-item">
+        <text class="metric-icon">🔧</text>
+        <text class="metric-label">技术难度</text>
+        <text class="metric-value">{{report.summary.tech_difficulty}}</text>
+      </view>
+      <view class="metric-item">
+        <text class="metric-icon">💰</text>
+        <text class="metric-label">启动成本</text>
+        <text class="metric-value">{{report.summary.startup_cost}}</text>
+      </view>
+      <view class="metric-item">
+        <text class="metric-icon">⏱</text>
+        <text class="metric-label">回本周期</text>
+        <text class="metric-value">{{report.summary.payback_period}}</text>
+      </view>
+    </view>
+
+    <!-- One-liner -->
+    <view class="oneline" wx:if="{{report.summary && report.summary.one_liner}}">
+      <text class="oneline-text">{{report.summary.one_liner}}</text>
+    </view>
+  </view>
+
+  <!-- ═══ 下一步行动 ═══ -->
+  <view class="sc-section sc-section-last">
+    <view class="sc-section-head">
+      <text class="sc-section-icon">🚀</text>
+      <text class="sc-section-title">下一步行动</text>
+    </view>
+
+    <!-- Source badge -->
+    <view class="source-badge-wrap">
+      <text class="source-badge" wx:if="{{report.has_search_data}}">🔍 实时搜索 + AI 分析</text>
+      <text class="source-badge" wx:else>🤖 AI 分析</text>
+    </view>
+
+    <!-- Actions -->
+    <view class="summary-actions">
+      <button class="sc-btn-primary" bindtap="viewReport">查看完整报告</button>
+      <view class="sc-btn-row">
+        <button class="sc-btn-second" bindtap="generatePrd">
+          <text>{{hasPrd ? '查看 PRD' : '生成 PRD'}}</text>
+          <text wx:if="{{!hasPrd}}" class="sc-btn-tag">2 积分</text>
+        </button>
+        <button class="sc-btn-second" open-type="share">分享卡片</button>
+      </view>
+    </view>
+  </view>
+</view>

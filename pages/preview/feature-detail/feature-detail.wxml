@@ -1,0 +1,67 @@
+<scroll-view class="page" scroll-y>
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:5%;right:-20%;width:400rpx;height:400rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:20%;left:-15%;width:350rpx;height:350rpx"></view>
+  </view>
+
+  <view wx:if="{{!loaded && !error}}" class="glass-card"><!-- Loading -->
+    <view class="loading-wrap">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{error}}" class="glass-card"><!-- Error -->
+    <view class="loading-wrap">
+      <text class="empty-text">{{error}}</text>
+      <view class="btn-w"><button class="btn-p btn-out" bindtap="goBack">返回</button></view>
+    </view>
+  </view>
+
+  <view wx:else class="page-content"><!-- Feature detail -->
+    <!-- Hero -->
+    <view class="fd-hero">
+      <view class="fd-hero-icon-wrap">
+        <text class="fd-hero-icon">{{feature.icon}}</text>
+      </view>
+      <text class="fd-hero-title">{{feature.title}}</text>
+    </view>
+
+    <!-- Description -->
+    <view class="fd-section">
+      <view class="fd-section-head">
+        <text class="fd-section-icon">📋</text>
+        <text class="fd-section-title">功能详情</text>
+      </view>
+      <text class="fd-desc">{{feature.desc}}</text>
+    </view>
+
+    <!-- Key Points -->
+    <view class="fd-section">
+      <view class="fd-section-head">
+        <text class="fd-section-icon">💡</text>
+        <text class="fd-section-title">核心价值</text>
+      </view>
+      <view class="fd-value-list">
+        <view class="fd-value-item">
+          <text class="fd-value-dot" style="background: #5B6FE6;"></text>
+          <text class="fd-value-text">专注于 {{feature.title}}，解决实际问题</text>
+        </view>
+        <view class="fd-value-item">
+          <text class="fd-value-dot" style="background: #34C472;"></text>
+          <text class="fd-value-text">智能化处理，提升效率</text>
+        </view>
+        <view class="fd-value-item">
+          <text class="fd-value-dot" style="background: #F59E6B;"></text>
+          <text class="fd-value-text">无缝集成，即开即用</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Back button -->
+    <view class="btn-w">
+      <button class="btn-p btn-out" bindtap="goBack">返回预览</button>
+    </view>
+  </view>
+  <bottom-tab activeTab="" />
+</scroll-view>

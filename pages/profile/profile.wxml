@@ -1,0 +1,129 @@
+<view class="page">
+
+  <!-- Background blobs -->
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:-10%;right:-20%;width:500rpx;height:500rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:10%;left:-15%;width:400rpx;height:400rpx"></view>
+  </view>
+
+  <!-- ── User Card ── -->
+  <view class="user-card gradient-primary dots-pattern">
+    <view class="user-card-inner glass-strong">
+      <view class="avatar" bindtap="chooseAvatar">
+        <image wx:if="{{avatarUrl}}" class="avatar-img" src="{{avatarUrl}}" mode="aspectFill" lazy-load />
+        <text wx:else class="avatar-text">{{initial}}</text>
+      </view>
+      <text class="username">{{username}}</text>
+      <text class="user-id">ID: {{userId}}</text>
+
+      <!-- WeChat login -->
+      <view wx:if="{{!loggedIn}}" class="login-btn" bindtap="doWechatLogin">
+        <text>微信一键登录</text>
+      </view>
+      <view wx:elif="{{showProfileEditor}}" class="profile-editor">
+        <input class="nickname-input" type="nickname" placeholder="输入昵称" bindinput="onNicknameInput" value="{{editNickName}}" maxlength="20" />
+        <view class="editor-actions">
+          <button class="btn-sm btn-primary" bindtap="saveProfile" disabled="{{!hasEditNickName}}">保存</button>
+          <button class="btn-sm btn-outline" bindtap="toggleEditor">取消</button>
+        </view>
+      </view>
+      <view wx:else class="edit-profile-hint" bindtap="toggleEditor">
+        <text>编辑资料 →</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── Credits (Glass) ── -->
+  <view class="glass-card credit-card">
+    <view class="credit-header">
+      <text class="credit-label">剩余积分</text>
+      <text class="credit-badge-text">{{balance}} 积分</text>
+    </view>
+    <view class="credit-bar">
+      <view class="credit-fill" style="width: {{barWidth}}%"></view>
+    </view>
+    <text class="credit-hint" wx:if="{{balance < 5}}">积分不足，请及时购买</text>
+    <button class="btn-primary mt-md" bindtap="goPricing">购买积分</button>
+  </view>
+
+  <!-- ── Menu (Glass) ── -->
+  <view class="glass-card menu-card">
+    <view class="menu-item" bindtap="goHistory">
+      <view class="menu-left">
+        <view class="menu-icon-wrap">
+          <text class="menu-emoji">📋</text>
+        </view>
+        <text class="menu-label">验证历史</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goContact">
+      <view class="menu-left">
+        <view class="menu-icon-wrap">
+          <text class="menu-emoji">💬</text>
+        </view>
+        <text class="menu-label">联系我们</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+    <button class="menu-item menu-btn-share" open-type="share" bindtapsuccess="onShareSuccess">
+      <view class="menu-left">
+        <view class="menu-icon-wrap">
+          <text class="menu-emoji">🔗</text>
+        </view>
+        <text class="menu-label">分享给好友</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </button>
+    <view class="menu-item" bindtap="goSettings">
+      <view class="menu-left">
+        <view class="menu-icon-wrap">
+          <text class="menu-emoji">⚙️</text>
+        </view>
+        <text class="menu-label">设置</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item menu-item-logout" bindtap="doLogout" wx:if="{{loggedIn}}">
+      <view class="menu-left">
+        <view class="menu-icon-wrap icon-wrap-logout">
+          <text class="menu-emoji">🚪</text>
+        </view>
+        <text class="menu-label label-logout">退出登录</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── Feedback ── -->
+  <view class="glass-card feedback-card">
+    <view class="feedback-header">
+      <text class="feedback-title">意见反馈</text>
+    </view>
+
+    <!-- Type -->
+    <picker mode="selector" range="{{feedbackTypes}}" value="{{feedbackTypeIndex}}" bindchange="onFeedbackTypeChange">
+      <view class="fb-row">
+        <text class="fb-label">反馈类型</text>
+        <view class="fb-picker">
+          <text class="fb-picker-text {{feedbackTypeIndex === 0 ? 'ph' : ''}}">{{feedbackTypes[feedbackTypeIndex]}}</text>
+          <text class="menu-arrow">›</text>
+        </view>
+      </view>
+    </picker>
+
+    <!-- Description -->
+    <view class="fb-textarea-wrap">
+      <textarea class="glass-input fb-textarea" placeholder="请详细描述您遇到的问题或建议，以便我们更好地为您服务..." value="{{feedback}}" bindinput="onFeedbackInput" maxlength="500" />
+      <text class="fb-counter">{{feedback.length}}/500</text>
+    </view>
+
+    <!-- Contact -->
+    <input class="fb-contact" placeholder="手机号/邮箱（选填，方便联系你）" value="{{contact}}" bindinput="onContactInput" />
+
+    <!-- Submit -->
+    <button class="btn-primary mt-md" bindtap="submitFeedback" disabled="{{!feedbackCanSubmit}}">提交反馈</button>
+    <text class="feedback-msg" wx:if="{{feedbackMsg}}">{{feedbackMsg}}</text>
+  </view>
+
+  <bottom-tab activeTab="profile" />
+</view>

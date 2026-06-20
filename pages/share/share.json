@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "summary-card": "../../components/summary-card/summary-card"
+  },
+  "navigationBarTitleText": "分享报告"
+}

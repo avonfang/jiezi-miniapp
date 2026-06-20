@@ -1,0 +1,4 @@
+node_modules/
+minitest/
+*.log
+.DS_Store

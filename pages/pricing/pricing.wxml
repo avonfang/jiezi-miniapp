@@ -1,0 +1,72 @@
+<scroll-view class="page" scroll-y>
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:0;right:-20%;width:400rpx;height:400rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:20%;left:-15%;width:350rpx;height:350rpx"></view>
+  </view>
+
+  <view class="page-content">
+    <!-- Balance -->
+    <view class="balance-area">
+      <text class="b-label">当前剩余</text>
+      <text class="b-count">{{balance}}</text>
+      <text class="b-unit">积分</text>
+    </view>
+
+    <!-- Plans -->
+    <view class="plan-h"><text class="plan-h-title">选择套餐</text></view>
+    <view class="glass-card plan-c {{selectedPlan === item.key ? 'sel' : ''}}" wx:for="{{plans}}" wx:key="key" bindtap="selectPlan" data-key="{{item.key}}">
+      <view wx:if="{{item.recommended}}" class="plan-badge">推荐</view>
+      <view class="plan-info">
+        <text class="plan-n">{{item.name}}</text>
+        <text class="plan-cr">{{item.credits}} 积分</text>
+      </view>
+      <view class="plan-pr-area">
+        <text class="plan-pr">¥{{item.price}}</text>
+        <text class="plan-pp">{{item.perPrice}} 元/积分</text>
+      </view>
+      <view class="plan-chk {{selectedPlan === item.key ? 'on' : ''}}">
+        <text class="chk" wx:if="{{selectedPlan === item.key}}">✓</text>
+      </view>
+    </view>
+
+    <!-- Top-ups -->
+    <view class="plan-h"><text class="plan-h-title">加油包</text></view>
+    <view class="topup-row">
+      <view class="glass-card topup-c {{selectedPlan === item.key ? 'sel' : ''}}" wx:for="{{topups}}" wx:key="key" bindtap="selectPlan" data-key="{{item.key}}">
+        <text class="topup-n">{{item.name}}</text>
+        <text class="topup-cr">{{item.credits}} 积分</text>
+        <text class="topup-pr">¥{{item.price}}</text>
+      </view>
+    </view>
+
+    <!-- Pay button -->
+    <view class="pay-w {{selectedPlan && !qrCode && !paySuccess ? 'visible' : ''}}">
+      <button class="pay-b" bindtap="handlePay" disabled="{{paying}}" wx:if="{{selectedPlan && !qrCode && !paySuccess}}">
+        {{paying ? '处理中...' : '立即支付 ¥' + currentPrice}}
+      </button>
+    </view>
+
+    <!-- QR -->
+    <view class="pay-w" wx:if="{{qrCode}}">
+      <view class="glass-card qr-card">
+        <text class="qr-title">微信扫码支付</text>
+        <image class="qr-image" src="{{qrCode}}" mode="widthFix" lazy-load />
+        <text class="qr-hint">支付完成后请返回查看</text>
+        <button class="btn-p btn-out" bindtap="goBack">返回首页</button>
+      </view>
+    </view>
+
+    <!-- Success -->
+    <view class="pay-w" wx:if="{{paySuccess}}">
+      <view class="glass-card success-card">
+        <view class="success-icon-wrap">
+          <text class="success-icon">✓</text>
+        </view>
+        <text class="success-title">支付成功！</text>
+        <text class="success-detail">已添加 {{addedCredits}} 积分</text>
+        <button class="btn-p btn-fill" bindtap="goBack">开始验证</button>
+      </view>
+    </view>
+  </view>
+  <bottom-tab activeTab="" />
+</scroll-view>

@@ -1,0 +1,35 @@
+.page {
+  min-height: 100vh;
+  background: transparent;
+  position: relative;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 48rpx;
+}
+
+.loading-text,
+.error-text {
+  text-align: center;
+  display: block;
+  color: #9D9DB0;
+  font-size: 26rpx;
+}
+
+.error-card {
+  border: 2rpx solid rgba(245,107,107,0.2);
+}
+
+.error-text {
+  color: #F56B6B;
+}
+
+.footer-note {
+  text-align: center;
+  padding: 32rpx;
+  font-size: 22rpx;
+  color: #B0B0C8;
+}
+

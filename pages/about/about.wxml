@@ -1,0 +1,80 @@
+<view class="page">
+
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:-5%;right:-15%;width:400rpx;height:400rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:20%;left:-20%;width:350rpx;height:350rpx"></view>
+  </view>
+
+  <view class="page-content">
+
+    <!-- Brand -->
+    <view class="ab-brand">
+      <image class="ab-logo" src="../../logo.png" mode="aspectFit" />
+      <text class="ab-name">芥子 - AI 产品创意验证器</text>
+      <text class="ab-version">{{version}}</text>
+      <text class="ab-tagline">从一句话想法，到可落地的产品原型</text>
+    </view>
+
+    <!-- Feature cards -->
+    <view class="ab-section">
+      <text class="ab-section-title">核心功能</text>
+      <view class="ab-card">
+        <view class="ab-card-icon-wrap" style="background:rgba(91,111,230,0.1)">
+          <text class="ab-card-icon">📊</text>
+        </view>
+        <view class="ab-card-body">
+          <text class="ab-card-title">市场验证</text>
+          <text class="ab-card-desc">输入产品想法，AI 自动分析市场前景、竞争密度和可行性</text>
+        </view>
+      </view>
+      <view class="ab-card">
+        <view class="ab-card-icon-wrap" style="background:rgba(52,196,114,0.1)">
+          <text class="ab-card-icon">📄</text>
+        </view>
+        <view class="ab-card-body">
+          <text class="ab-card-title">PRD 生成</text>
+          <text class="ab-card-desc">一键生成标准产品需求文档，包含功能列表、数据模型和技术方案</text>
+        </view>
+      </view>
+      <view class="ab-card">
+        <view class="ab-card-icon-wrap" style="background:rgba(245,158,107,0.1)">
+          <text class="ab-card-icon">🚀</text>
+        </view>
+        <view class="ab-card-body">
+          <text class="ab-card-title">产品预览</text>
+          <text class="ab-card-desc">自动生成产品落地页原型，让想法可视化</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Links -->
+    <view class="ab-section">
+      <text class="ab-section-title">相关链接</text>
+      <view class="ab-link" bindtap="onCopy" data-text="https://jiezi.site">
+        <text class="ab-link-label">官网</text>
+        <view class="ab-link-right">
+          <text class="ab-link-url">jiezi.site</text>
+          <text class="menu-arrow">›</text>
+        </view>
+      </view>
+      <view class="ab-link" bindtap="onCopy" data-text="sumerujiezi@163.com">
+        <text class="ab-link-label">联系邮箱</text>
+        <view class="ab-link-right">
+          <text class="ab-link-url">sumerujiezi@163.com</text>
+          <text class="menu-arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Legal -->
+    <view class="ab-legal">
+      <text class="ab-legal-text" bindtap="onCopy" data-text="https://jiezi.site/privacy">隐私协议</text>
+      <text class="ab-legal-divider">|</text>
+      <text class="ab-legal-text" bindtap="onCopy" data-text="https://jiezi.site/terms">用户协议</text>
+    </view>
+
+    <text class="ab-copyright">© 2026 芥子 · All Rights Reserved</text>
+
+  </view>
+  <bottom-tab activeTab="" />
+</view>

@@ -1,0 +1,167 @@
+<scroll-view class="page" scroll-y>
+
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:5%;right:-20%;width:400rpx;height:400rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:20%;left:-15%;width:350rpx;height:350rpx"></view>
+  </view>
+
+  <view class="page-content">
+    <!-- Verdict banner -->
+    <view class="verdict-banner verdict-{{verdictClass}}">
+      <text class="v-title">{{report.verdict}}</text>
+      <text class="v-reason">{{report.verdict_reason}}</text>
+      <view wx:if="{{report.sharp_comment}}" style="margin-top:16rpx;font-size:24rpx;opacity:0.85;text-align:left;padding:16rpx;background:rgba(255,255,255,0.2);border-radius:12rpx">
+        <text>💡 {{report.sharp_comment}}</text>
+      </view>
+    </view>
+
+    <!-- Summary grid -->
+    <view class="glass-card">
+      <view class="summary-grid">
+        <view class="summary-item glass-light" wx:for="{{summaryItems}}" wx:key="label">
+          <text class="summary-icon">{{item.icon}}</text>
+          <text class="summary-value">{{item.value}}</text>
+          <text class="summary-label">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Scores -->
+    <view class="glass-card">
+      <view class="section-head">
+        <text class="section-icon">📊</text>
+        <text class="section-title">综合评分</text>
+      </view>
+      <view class="s-row">
+        <text class="s-lbl">市场前景</text>
+        <view class="s-bar-bg">
+          <view class="s-bar-fill" style="width: {{report.market_score * 10}}%"></view>
+        </view>
+        <text class="s-num">{{report.market_score}}</text>
+      </view>
+      <view class="s-row">
+        <text class="s-lbl">开发可行性</text>
+        <view class="s-bar-bg">
+          <view class="s-bar-fill green" style="width: {{report.feasibility_score * 10}}%"></view>
+        </view>
+        <text class="s-num">{{report.feasibility_score}}</text>
+      </view>
+    </view>
+
+    <!-- Sub-scores -->
+    <view class="glass-card" wx:if="{{report.scoring}}">
+      <view class="section-head">
+        <text class="section-icon">📈</text>
+        <text class="section-title">细项评分</text>
+      </view>
+      <view class="d-row" wx:for="{{scoreItems}}" wx:for-item="score" wx:key="key">
+        <text class="d-lbl">{{score.label}}</text>
+        <view class="d-right">
+          <view class="dots">
+            <view class="dot {{i < score.value ? 'on on-' + score.colorClass : ''}}" wx:for="{{5}}" wx:for-index="i" wx:key="i"></view>
+          </view>
+          <text class="d-num d-num-{{score.colorClass}}">{{score.value}}/5</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Competitors -->
+    <view class="glass-card" wx:if="{{report.competitors && report.competitors.length}}">
+      <view class="section-head">
+        <text class="section-icon">🏆</text>
+        <text class="section-title">竞品分析</text>
+      </view>
+      <view class="comp-item" wx:for="{{report.competitors}}" wx:for-index="i" wx:key="i">
+        <text class="comp-name">{{item.name}}</text>
+        <text class="comp-desc">{{item.positioning}}</text>
+      </view>
+    </view>
+
+    <!-- SWOT -->
+    <view class="glass-card" wx:if="{{report.swot}}">
+      <view class="section-head">
+        <text class="section-icon">🔍</text>
+        <text class="section-title">SWOT 分析</text>
+      </view>
+      <view class="swot">
+        <view class="swot-cell swot-s">
+          <text class="swot-lbl">✅ 优势</text>
+          <text class="swot-item" wx:for="{{report.swot.strengths}}" wx:key="*this">• {{item}}</text>
+        </view>
+        <view class="swot-cell swot-w">
+          <text class="swot-lbl">⚠️ 劣势</text>
+          <text class="swot-item" wx:for="{{report.swot.weaknesses}}" wx:key="*this">• {{item}}</text>
+        </view>
+        <view class="swot-cell swot-o">
+          <text class="swot-lbl">💡 机会</text>
+          <text class="swot-item" wx:for="{{report.swot.opportunities}}" wx:key="*this">• {{item}}</text>
+        </view>
+        <view class="swot-cell swot-t">
+          <text class="swot-lbl">🚨 威胁</text>
+          <text class="swot-item" wx:for="{{report.swot.threats}}" wx:key="*this">• {{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Risk warnings -->
+    <view class="glass-card risk-card" wx:if="{{report.risk_warnings && report.risk_warnings.length}}">
+      <view class="section-head">
+        <text style="font-size:28rpx">⚠️</text>
+        <text class="risk-title">风险提示</text>
+      </view>
+      <view class="risk-item" wx:for="{{report.risk_warnings}}" wx:key="*this">
+        <text class="risk-bullet">•</text>
+        <text>{{item}}</text>
+      </view>
+    </view>
+
+    <!-- Extra sections -->
+    <view class="glass-card" wx:if="{{report.differentiation}}">
+      <view class="section-head">
+        <text class="section-icon">🎯</text>
+        <text class="section-title">差异化空间</text>
+      </view>
+      <text class="body-text">{{report.differentiation}}</text>
+    </view>
+
+    <view class="glass-card" wx:if="{{report.target_users}}">
+      <view class="section-head">
+        <text class="section-icon">👥</text>
+        <text class="section-title">目标用户</text>
+      </view>
+      <text class="body-text">{{report.target_users}}</text>
+    </view>
+
+    <view class="glass-card" wx:if="{{report.pricing_suggestion}}">
+      <view class="section-head">
+        <text class="section-icon">💰</text>
+        <text class="section-title">定价建议</text>
+      </view>
+      <text class="body-text">{{report.pricing_suggestion}}</text>
+    </view>
+
+    <view class="glass-card" wx:if="{{report.acquisition_channels}}">
+      <view class="section-head">
+        <text class="section-icon">📢</text>
+        <text class="section-title">获客渠道</text>
+      </view>
+      <text class="body-text">{{report.acquisition_channels}}</text>
+    </view>
+
+    <view class="glass-card" wx:if="{{report.mvp_timeline}}">
+      <view class="section-head">
+        <text class="section-icon">📅</text>
+        <text class="section-title">MVP 时间线</text>
+      </view>
+      <text class="body-text">{{report.mvp_timeline}}</text>
+    </view>
+
+    <!-- Actions -->
+    <view class="btn-w">
+      <button class="btn-glass btn-glass-primary" bindtap="goPrd">{{hasPrd ? '查看 PRD' : '生成 PRD（需 2 积分）'}}</button>
+      <button class="btn-glass" open-type="share">分享卡片</button>
+      <button class="btn-glass" bindtap="goHome">返回首页</button>
+    </view>
+  </view>
+  </scroll-view>
+  <bottom-tab activeTab="" />

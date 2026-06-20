@@ -1,0 +1,57 @@
+<view class="timeline-card">
+  <view class="step {{step >= 1 ? 'active' : ''}} {{step > 1 ? 'done' : ''}}">
+    <view class="step-dot-wrap">
+      <view class="step-dot">
+        <text wx:if="{{step > 1}}" class="step-check">✓</text>
+        <text wx:elif="{{step === 1}}" class="step-num spinner">⟳</text>
+        <text wx:else class="step-num">1</text>
+      </view>
+      <view class="step-line" wx:if="{{step < 4}}"></view>
+    </view>
+    <view class="step-content">
+      <text class="step-label">解析产品需求</text>
+      <text class="step-desc" wx:if="{{step === 1}}">从产品想法中提取关键需求要素</text>
+    </view>
+  </view>
+  <view class="step {{step >= 2 ? 'active' : ''}} {{step > 2 ? 'done' : ''}}">
+    <view class="step-dot-wrap">
+      <view class="step-dot">
+        <text wx:if="{{step > 2}}" class="step-check">✓</text>
+        <text wx:elif="{{step === 2}}" class="step-num spinner">⟳</text>
+        <text wx:else class="step-num">2</text>
+      </view>
+      <view class="step-line" wx:if="{{step < 4}}"></view>
+    </view>
+    <view class="step-content">
+      <text class="step-label">设计产品方案</text>
+      <text class="step-desc" wx:if="{{step === 2}}">定义产品定位、目标用户和核心功能</text>
+    </view>
+  </view>
+  <view class="step {{step >= 3 ? 'active' : ''}} {{step > 3 ? 'done' : ''}}">
+    <view class="step-dot-wrap">
+      <view class="step-dot">
+        <text wx:if="{{step > 3}}" class="step-check">✓</text>
+        <text wx:elif="{{step === 3}}" class="step-num spinner">⟳</text>
+        <text wx:else class="step-num">3</text>
+      </view>
+      <view class="step-line" wx:if="{{step < 4}}"></view>
+    </view>
+    <view class="step-content">
+      <text class="step-label">AI 生成内容</text>
+      <text class="step-desc" wx:if="{{step === 3}}">生成用户流程、功能详情和数据模型</text>
+    </view>
+  </view>
+  <view class="step {{step >= 4 ? 'active' : ''}} {{step > 4 ? 'done' : ''}}">
+    <view class="step-dot-wrap">
+      <view class="step-dot">
+        <text wx:if="{{step > 4}}" class="step-check">✓</text>
+        <text wx:elif="{{step === 4}}" class="step-num spinner">⟳</text>
+        <text wx:else class="step-num">4</text>
+      </view>
+    </view>
+    <view class="step-content">
+      <text class="step-label">生成 PRD 文档</text>
+      <text class="step-desc" wx:if="{{step === 4}}">整理所有内容，生成完整 PRD 文档</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,80 @@
+.page {
+  min-height: 100vh;
+  background: transparent;
+  padding: 40rpx 32rpx 160rpx;
+  position: relative;
+}
+
+.cu-header {
+  text-align: center;
+  margin-bottom: 48rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.cu-header-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.cu-header-desc {
+  display: block;
+  font-size: 26rpx;
+  color: var(--color-text-muted);
+  margin-top: 12rpx;
+}
+
+.cu-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 24rpx;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12rpx);
+  -webkit-backdrop-filter: blur(12rpx);
+  border-radius: var(--radius-md);
+  padding: 28rpx 32rpx;
+  margin-bottom: 20rpx;
+  border: 1rpx solid rgba(255,255,255,0.4);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  z-index: 1;
+}
+
+.cu-card:active {
+  transform: scale(0.99);
+}
+
+.cu-card-icon {
+  font-size: 40rpx;
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cu-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.cu-card-label {
+  font-size: 22rpx;
+  color: var(--color-text-muted);
+}
+
+.cu-card-value {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.cu-card-hint {
+  font-size: 20rpx;
+  color: #B0AEC0;
+  margin-top: 2rpx;
+}

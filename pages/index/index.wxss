@@ -1,0 +1,253 @@
+.page {
+  min-height: 100vh;
+  background: transparent;
+  position: relative;
+  overflow-y: auto;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 160rpx;
+}
+
+/* ── Hero Eyebrow ── */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 8rpx 24rpx;
+  margin: 0 40rpx;
+  background: rgba(79,143,255,0.1);
+  border: 2rpx solid rgba(79,143,255,0.25);
+  border-radius: 999px;
+  font-size: 22rpx;
+  color: #4F8BFF;
+  font-weight: 500;
+}
+
+.hero-eyebrow .dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: #4F8BFF;
+  flex-shrink: 0;
+}
+
+/* ── Hero Title ── */
+.hero-title {
+  margin: 32rpx 40rpx 16rpx;
+  line-height: 1.2;
+  letter-spacing: -1rpx;
+}
+
+.hero-title text {
+  display: block;
+  font-size: 56rpx;
+  font-weight: 800;
+  color: #1a1a2e;
+}
+
+/* ── Hero Desc ── */
+.hero-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #6B6B80;
+  line-height: 1.6;
+  margin: 0 40rpx 32rpx;
+}
+
+/* ── Feature Strip ── */
+.feature-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 40rpx 32rpx;
+  padding: 24rpx 32rpx;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(16rpx);
+  -webkit-backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255,255,255,0.4);
+}
+
+.feature-item {
+  font-size: 24rpx;
+  color: #5B6FE6;
+  font-weight: 500;
+}
+
+.feature-divider {
+  width: 2rpx;
+  height: 32rpx;
+  background: rgba(200,196,216,0.3);
+  margin: 0 32rpx;
+  flex-shrink: 0;
+}
+
+/* ── Input Card ── */
+.input-card {
+  margin: 24rpx 40rpx;
+  padding: 32rpx;
+  border-radius: 32rpx;
+}
+
+.input-textarea {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 28rpx;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  min-height: 144rpx;
+  line-height: 1.6;
+  color: #1a1a2e;
+}
+
+.input-textarea::placeholder {
+  color: #B0B0C8;
+}
+
+.input-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16rpx;
+}
+
+.char-count {
+  font-size: 22rpx;
+  color: #B0B0C8;
+}
+
+.send-btn {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  font-size: 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #5B6FE6, #8B6FE8);
+  box-shadow: 0 8rpx 24rpx rgba(91,111,230,0.3);
+  padding: 0;
+  transition: all 0.2s;
+}
+
+.send-btn:active {
+  transform: scale(0.92);
+}
+
+/* ── Caps Strip ── */
+.caps-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  margin: 24rpx 40rpx;
+  font-size: 22rpx;
+  color: #9D9DB0;
+}
+
+.caps-strip .dot-div {
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  background: #D0D0E0;
+  flex-shrink: 0;
+}
+
+/* ── Chips ── */
+.chips-title {
+  display: block;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #6B6B80;
+  padding: 0 40rpx;
+  margin-bottom: 16rpx;
+}
+
+.chips {
+  display: flex;
+  gap: 16rpx;
+  padding: 0 40rpx;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 16rpx 32rpx;
+  border-radius: 999px;
+  font-size: 24rpx;
+  color: #5B6FE6;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8rpx);
+  -webkit-backdrop-filter: blur(8rpx);
+  border: 2rpx solid rgba(255,255,255,0.3);
+  transition: all 0.2s;
+}
+
+.chip:active {
+  background: rgba(255,255,255,0.85);
+}
+
+/* ── Loading ── */
+.loading-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 48rpx 32rpx;
+}
+
+.loading-card-inner {
+  width: 100%;
+  border-radius: 32rpx;
+  padding: 48rpx 32rpx;
+}
+
+.loading-text {
+  display: block;
+  text-align: center;
+  font-size: 24rpx;
+  color: #9D9DB0;
+  margin-top: 24rpx;
+}
+
+/* ── Result ── */
+.result-wrap {
+  position: relative;
+  z-index: 1;
+  padding: 24rpx 24rpx 160rpx;
+}
+
+/* ── Error ── */
+.error-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 48rpx 40rpx;
+  padding: 56rpx 32rpx;
+  border-radius: 32rpx;
+  border: 2rpx solid rgba(245,107,107,0.15);
+}
+
+.error-icon-wrap {
+  margin-bottom: 16rpx;
+  font-size: 48rpx;
+}
+
+.error-text {
+  color: #F56B6B;
+  font-size: 26rpx;
+  display: block;
+  line-height: 1.5;
+  text-align: center;
+}

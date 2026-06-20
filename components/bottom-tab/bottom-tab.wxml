@@ -1,0 +1,15 @@
+<view class="tab-bar" style="padding-bottom: {{safeBottom}}px;">
+  <view class="tab-inner">
+    <view
+      class="tab-item {{item.key === activeTab ? 'tab-item-active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="key"
+      data-tab="{{item.key}}"
+      bindtap="switchTab"
+    >
+      <image class="tab-icon" src="{{item.key === activeTab ? item.iconSel : item.icon}}" mode="scaleToFill" />
+      <text class="tab-label">{{item.label}}</text>
+      <view class="tab-indicator" wx:if="{{item.key === activeTab}}"></view>
+    </view>
+  </view>
+</view>

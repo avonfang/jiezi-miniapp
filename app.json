@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/report/report",
+    "pages/prd/prd",
+    "pages/preview/preview",
+    "pages/preview/feature-detail/feature-detail",
+    "pages/history/history",
+    "pages/profile/profile",
+    "pages/settings/settings",
+    "pages/pricing/pricing",
+    "pages/contact/contact",
+    "pages/contact-us/contact-us",
+    "pages/about/about",
+    "pages/share/share"
+  ],
+  "window": {
+    "navigationBarTitleText": "芥子",
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#F8F7FC"
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {
+    "bottom-tab": "/components/bottom-tab/bottom-tab",
+    "loading-timeline-prd": "/components/loading-timeline-prd/loading-timeline-prd"
+  }
+}

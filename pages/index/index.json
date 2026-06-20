@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "loading-timeline": "../../components/loading-timeline/loading-timeline",
+    "summary-card": "../../components/summary-card/summary-card"
+  },
+  "navigationBarTitleText": "",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black"
+}

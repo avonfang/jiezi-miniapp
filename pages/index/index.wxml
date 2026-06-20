@@ -1,0 +1,93 @@
+<view class="page">
+
+  <!-- Floating background blobs -->
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:5%;right:-20%;width:400rpx;height:400rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:20%;left:-15%;width:350rpx;height:350rpx"></view>
+  </view>
+
+  <!-- ====== Main content ====== -->
+  <view class="page-content" wx:if="{{!loading && !report && !error}}">
+
+    <!-- Hero Eyebrow -->
+    <view class="hero-eyebrow">
+      <view class="dot"></view>
+      <text>AI 驱动 · 实时市场分析</text>
+    </view>
+
+    <!-- Hero Title -->
+    <view class="hero-title">
+      <text>从一句话想法</text>
+      <text>到可落地的产品原型</text>
+    </view>
+
+    <!-- Hero Desc -->
+    <text class="hero-desc">输入产品想法，AI 自动验证市场方向、分析竞品、生成 PRD 和产品预览页</text>
+
+    <!-- Feature Strip -->
+    <view class="feature-strip">
+      <text class="feature-item">📊 市场分析</text>
+      <view class="feature-divider"></view>
+      <text class="feature-item">🏆 竞品洞察</text>
+      <view class="feature-divider"></view>
+      <text class="feature-item">⚡ 实时生成</text>
+    </view>
+
+    <!-- Input Card -->
+    <view class="glass-card input-card">
+      <textarea class="input-textarea" placeholder="{{placeholderText}}" value="{{idea}}" bindinput="onIdeaInput" bindconfirm="onValidate" confirm-type="send" maxlength="5000" auto-height />
+      <view class="input-bottom">
+        <text class="char-count">{{idea.length || 0}} / 5000</text>
+        <view class="send-btn" bindtap="onValidate"><text>→</text></view>
+      </view>
+    </view>
+
+    <!-- Caps Strip -->
+    <view class="caps-strip">
+      <text>市场前景</text>
+      <view class="dot-div"></view>
+      <text>竞品分析</text>
+      <view class="dot-div"></view>
+      <text>SWOT</text>
+      <view class="dot-div"></view>
+      <text>风险提示</text>
+    </view>
+
+    <!-- Sample Chips -->
+    <text class="chips-title">🔥 大家最近在验证的想法</text>
+    <view class="chips">
+      <view class="chip" wx:for="{{examples}}" wx:key="index" bindtap="fillIdea" data-idea="{{item.idea}}">
+        <text>{{item.icon}} {{item.idea}}</text>
+      </view>
+    </view>
+
+
+  </view>
+
+  <!-- ====== Loading State ====== -->
+  <view wx:if="{{loading}}" class="loading-wrap">
+    <view class="glass-card loading-card-inner">
+      <loading-timeline step="{{timelineStep}}" />
+      <text class="loading-text">{{loadingText}}</text>
+    </view>
+  </view>
+
+  <!-- ====== Summary Result ====== -->
+  <view wx:if="{{report}}" class="result-wrap">
+    <summary-card report="{{report}}" idea="{{idea}}" hasPrd="{{hasPrd}}" bind:viewReport="goReport" bind:generatePrd="goPrd" />
+    <view class="btn-w">
+      <button class="btn-glass" bindtap="reset">重新输入</button>
+    </view>
+  </view>
+
+  <!-- ====== Error ====== -->
+  <view wx:if="{{error}}" class="glass-card error-card">
+    <view class="error-icon-wrap">
+      <text>⚠️</text>
+    </view>
+    <text class="error-text">{{error}}</text>
+    <button class="btn-p btn-fill" bindtap="retry">重新验证</button>
+  </view>
+
+  <bottom-tab activeTab="validate" />
+</view>

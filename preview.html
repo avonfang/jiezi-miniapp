@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>芥子 SUMERU — 设计预览</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', sans-serif;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 30%, rgba(91,111,230,0.15), transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(139,111,232,0.1), transparent 50%);
+    pointer-events: none;
+  }
+
+  .header-title { color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
+  .header-sub { color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 24px; }
+
+  .page-selector {
+    display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;
+  }
+  .page-selector button {
+    padding: 8px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); font-size: 13px;
+    cursor: pointer; font-family: inherit; transition: all 0.25s;
+  }
+  .page-selector button:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+  .page-selector button.sel { background: rgba(91,111,230,0.25); border-color: rgba(91,111,230,0.4); color: #fff; }
+
+  .phone {
+    width: 375px; height: 780px;
+    background: #F8F7FC;
+    border-radius: 44px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 0 6px #2a2a4a, 0 0 0 8px #3a3a5a, 0 20px 80px rgba(0,0,0,0.6), 0 0 120px rgba(91,111,230,0.1);
+  }
+  .notch {
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 24px; background: #1a1a2e; border-radius: 0 0 16px 16px; z-index: 100;
+  }
+
+  .page-container { position: absolute; top: 0; left: 0; right: 0; bottom: 50px; overflow: hidden; }
+  .page {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    overflow-y: auto; overflow-x: hidden;
+    padding-top: 80px; padding-bottom: 16px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease; background: transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+  .page.active { opacity: 1; pointer-events: all; }
+  .page::-webkit-scrollbar { width: 0; }
+
+  .tab-bar {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 50px;
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(200,200,220,0.3);
+    display: flex; align-items: center; justify-content: space-around; z-index: 50;
+  }
+  .tab-item {
+    display: flex; flex-direction: column; align-items: center; gap: 1px;
+    cursor: pointer; padding: 4px 12px; border: none; background: none; font-family: inherit;
+  }
+  .tab-icon { font-size: 18px; line-height: 1; }
+  .tab-label { font-size: 9px; color: #9D9DB0; transition: color 0.2s; }
+  .tab-item.active .tab-label { color: #5B6FE6; font-weight: 600; }
+
+  /* ── Blob ── */
+  .blob-container { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.45; }
+  .blob-blue { background: #5B6FE6; width: 200px; height: 200px; top: 5%; right: -20%; animation: float 8s ease-in-out infinite; }
+  .blob-purple { background: #8B6FE8; width: 175px; height: 175px; bottom: 20%; left: -15%; animation: floatSlow 12s ease-in-out infinite; }
+  @keyframes float {
+    0%,100%{transform:translate(0,0)scale(1)} 33%{transform:translate(15px,-20px)scale(1.05)} 66%{transform:translate(-10px,15px)scale(0.95)}
+  }
+  @keyframes floatSlow {
+    0%,100%{transform:translate(0,0)scale(1)} 50%{transform:translate(-20px,-25px)scale(1.08)}
+  }
+
+  .page-content { position: relative; z-index: 1; padding-bottom: 20px; }
+
+  /* ── Glass Card ── */
+  .glass-card {
+    margin: 12px 16px; padding: 20px 24px; border-radius: 16px;
+    background: rgba(255,255,255,0.78); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 4px 20px rgba(91,111,230,0.08);
+  }
+  .glass-light { background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3); }
+  .gradient-primary { background: linear-gradient(135deg, #5B6FE6, #8B6FE8); }
+  .gradient-text { background: linear-gradient(135deg, #5B6FE6, #8B6FE8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* ── Shared ── */
+  .section-head { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .section-icon { font-size: 18px; }
+  .section-title { font-size: 16px; font-weight: 700; color: #1a1a2e; }
+
+  /* ======================
+     PAGE 0: HOME
+     ====================== */
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; background: rgba(79,143,255,0.1);
+    border: 1px solid rgba(79,143,255,0.25); border-radius: 999px;
+    font-size: 11px; color: #4F8BFF; font-weight: 500; margin: 0 20px;
+  }
+  .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: #4F8BFF; }
+  .hero-title { font-size: 28px; font-weight: 800; color: #1a1a2e; margin: 16px 20px 8px; line-height: 1.2; letter-spacing: -0.5px; }
+  .hero-desc { font-size: 14px; color: #6B6B80; line-height: 1.6; margin: 0 20px 16px; }
+
+  .feature-strip {
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 20px 16px; padding: 12px 16px; border-radius: 999px;
+    background: rgba(255,255,255,0.7); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+  .feature-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #5B6FE6; font-weight: 500; }
+  .feature-divider { width: 1px; height: 16px; background: rgba(200,196,216,0.3); margin: 0 16px; }
+
+  .input-card { margin: 12px 20px; padding: 16px; border-radius: 16px; }
+  .input-card textarea {
+    width: 100%; border: none; background: transparent; font-size: 14px;
+    font-family: inherit; resize: none; outline: none; min-height: 72px;
+    line-height: 1.6; color: #1a1a2e;
+  }
+  .input-card textarea::placeholder { color: #B0B0C8; }
+  .input-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+  .char-count { font-size: 11px; color: #B0B0C8; }
+  .send-btn {
+    width: 40px; height: 40px; border-radius: 50%; border: none; color: #fff; font-size: 18px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    background: linear-gradient(135deg, #5B6FE6, #8B6FE8);
+    box-shadow: 0 4px 12px rgba(91,111,230,0.3); transition: all 0.2s;
+  }
+  .send-btn:active { transform: scale(0.92); }
+
+  .caps-strip { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 12px 20px; font-size: 11px; color: #9D9DB0; }
+  .caps-strip .dot-div { width: 3px; height: 3px; border-radius: 50%; background: #D0D0E0; }
+
+  .chips { display: flex; gap: 8px; padding: 0 20px; flex-wrap: wrap; }
+  .chip {
+    padding: 8px 16px; border-radius: 999px; font-size: 12px; color: #5B6FE6;
+    background: rgba(255,255,255,0.6); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.3); transition: all 0.2s;
+  }
+
+  .action-bar {
+    display: flex; align-items: center; justify-content: space-around;
+    margin: 24px 20px; padding: 10px 8px; border-radius: 999px;
+    background: rgba(255,255,255,0.6); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .action-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 6px 20px; border: none; background: none; cursor: pointer;
+    font-family: inherit; border-radius: 999px; transition: all 0.2s;
+  }
+  .action-btn:active { background: rgba(91,111,230,0.08); }
+  .action-icon { font-size: 18px; }
+  .action-label { font-size: 10px; color: #6B6B80; }
+
+  /* ======================
+     PAGE 1: REPORT
+     ====================== */
+  .verdict-banner { margin: 12px 16px; padding: 24px 20px; border-radius: 16px; text-align: center; position: relative; overflow: hidden; }
+  .verdict-banner.try { background: linear-gradient(135deg, #34C472, #56D98A); color: #fff; }
+  .verdict-banner.explore { background: linear-gradient(135deg, #F59E6B, #F7B84D); color: #fff; }
+  .verdict-banner.no { background: linear-gradient(135deg, #F56B6B, #F78B8B); color: #fff; }
+  .v-title { font-size: 28px; font-weight: 800; display: block; text-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .v-reason { font-size: 13px; opacity: 0.9; display: block; margin-top: 6px; line-height: 1.6; }
+
+  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .summary-item { text-align: center; padding: 14px 8px; border-radius: 12px; }
+  .summary-icon { font-size: 20px; display: block; margin-bottom: 2px; }
+  .summary-value { font-size: 18px; font-weight: 700; color: #5B6FE6; display: block; }
+  .summary-label { font-size: 11px; color: #9D9DB0; display: block; margin-top: 1px; }
+
+  .s-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .s-row:last-child { margin-bottom: 0; }
+  .s-lbl { width: 80px; font-size: 12px; flex-shrink: 0; color: #6B6B80; }
+  .s-bar-bg { flex: 1; height: 8px; background: rgba(200,196,216,0.25); border-radius: 999px; overflow: hidden; }
+  .s-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(135deg, #5B6FE6, #8B6FE8); }
+  .s-bar-fill.green { background: linear-gradient(135deg, #34C472, #56D98A); }
+  .s-num { font-size: 14px; font-weight: 700; width: 40px; text-align: right; color: #1a1a2e; }
+
+  .d-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(200,196,216,0.15); }
+  .d-row:last-child { border-bottom: none; }
+  .d-lbl { font-size: 13px; color: #1a1a2e; }
+  .dots { display: flex; gap: 6px; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; background: rgba(200,196,216,0.25); }
+  .dot.on { background: linear-gradient(135deg, #5B6FE6, #8B6FE8); }
+
+  .swot { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .swot-cell { padding: 14px; border-radius: 10px; }
+  .swot-s { background: rgba(52,196,114,0.08); }
+  .swot-w { background: rgba(245,107,107,0.08); }
+  .swot-o { background: rgba(91,111,230,0.06); }
+  .swot-t { background: rgba(245,158,107,0.08); }
+  .swot-lbl { font-size: 13px; font-weight: 700; display: block; margin-bottom: 6px; }
+  .swot-item { font-size: 12px; display: block; padding: 2px 0; color: #6B6B80; line-height: 1.5; }
+
+  .comp-item { padding: 12px 0; border-bottom: 1px solid rgba(200,196,216,0.15); }
+  .comp-item:last-child { border-bottom: none; }
+  .comp-name { font-size: 13px; font-weight: 600; display: block; }
+  .comp-desc { font-size: 12px; color: #6B6B80; display: block; margin-top: 2px; }
+
+  .risk-card { border-left: 5px solid #F56B6B; }
+  .risk-title { font-size: 16px; font-weight: 700; color: #F56B6B; }
+  .risk-item { display: flex; gap: 8px; padding: 6px 0; font-size: 13px; color: #6B6B80; line-height: 1.5; }
+  .risk-bullet { color: #F56B6B; flex-shrink: 0; }
+
+  .body-text { font-size: 13px; line-height: 1.7; color: #6B6B80; display: block; }
+
+  /* ── Buttons ── */
+  .btn-w { padding: 8px 16px 0; }
+  .btn-p {
+    display: block; width: 100%; padding: 15px; border: none; border-radius: 14px;
+    font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit;
+    margin-bottom: 8px; transition: all 0.2s; text-align: center;
+  }
+  .btn-p:active { transform: scale(0.98); }
+  .btn-fill { background: linear-gradient(135deg, #5B6FE6, #8B6FE8); color: #fff; box-shadow: 0 4px 20px rgba(91,111,230,0.25); }
+  .btn-out { background: transparent; color: #5B6FE6; border: 1.5px solid rgba(91,111,230,0.3); }
+
+  /* ======================
+     PAGE 2: PRICING
+     ====================== */
+  .balance-area { display: flex; align-items: baseline; justify-content: center; gap: 6px; padding: 28px 20px 0; }
+  .b-label { font-size: 14px; color: #6B6B80; }
+  .b-count { font-size: 44px; font-weight: 800; color: #1a1a2e; letter-spacing: -1px; }
+  .b-unit { font-size: 14px; color: #6B6B80; }
+
+  .plan-h { padding: 24px 20px 12px; }
+  .plan-h-title { font-size: 16px; font-weight: 700; color: #1a1a2e; }
+
+  .plan-c {
+    display: flex; align-items: center; gap: 16px; padding: 20px 24px;
+    margin: 0 16px 10px; position: relative; transition: all 0.2s;
+  }
+  .plan-c:active { opacity: 0.85; }
+  .plan-c.sel {
+    border-color: #5B6FE6;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(91,111,230,0.06));
+    box-shadow: 0 4px 16px rgba(91,111,230,0.12);
+  }
+  .plan-badge {
+    position: absolute; top: -10px; right: 20px;
+    background: linear-gradient(135deg, #F59E6B, #F7B84D); color: #fff;
+    font-size: 10px; font-weight: 600; padding: 3px 14px; border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(245,158,107,0.35);
+  }
+  .plan-info { flex: 1; }
+  .plan-n { font-size: 16px; font-weight: 700; display: block; color: #1a1a2e; }
+  .plan-cr { font-size: 12px; color: #9D9DB0; display: block; margin-top: 2px; }
+  .plan-pr-area { text-align: right; }
+  .plan-pr { font-size: 20px; font-weight: 800; color: #F56B6B; display: block; }
+  .plan-pp { font-size: 10px; color: #9D9DB0; display: block; margin-top: 1px; }
+  .plan-chk {
+    width: 22px; height: 22px; border-radius: 50%; border: 2px solid #E0E0EC;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .plan-chk.on { background: linear-gradient(135deg, #5B6FE6, #8B6FE8); border-color: transparent; }
+  .plan-chk.on .chk { color: #fff; font-size: 12px; font-weight: 700; }
+
+  .topup-row { display: flex; gap: 10px; padding: 0 16px; }
+  .topup-c {
+    flex: 1; padding: 18px; text-align: center; transition: all 0.2s;
+  }
+  .topup-c:active { opacity: 0.85; }
+  .topup-c.sel {
+    border-color: #5B6FE6;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(91,111,230,0.06));
+    box-shadow: 0 4px 12px rgba(91,111,230,0.1);
+  }
+  .topup-n { font-size: 13px; font-weight: 600; display: block; }
+  .topup-cr { font-size: 20px; font-weight: 800; color: #5B6FE6; display: block; margin: 6px 0; }
+  .topup-pr { font-size: 14px; color: #F56B6B; font-weight: 600; display: block; }
+
+  .pay-w { padding: 20px 16px 0; }
+  .pay-b {
+    width: 100%; padding: 16px; border: none; border-radius: 14px;
+    background: linear-gradient(135deg, #5B6FE6, #8B6FE8);
+    color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit;
+    box-shadow: 0 4px 20px rgba(91,111,230,0.3); transition: all 0.2s;
+  }
+  .pay-b:active { transform: scale(0.98); }
+
+  /* ======================
+     PAGE 3: PROFILE
+     ====================== */
+  .user-area {
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 4px 16px; padding: 20px 24px;
+  }
+  .user-l { display: flex; align-items: center; gap: 14px; }
+  .avatar {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: linear-gradient(135deg, #5B6FE6, #8B6FE8);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 700; color: #fff;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+  .uname { font-size: 16px; font-weight: 700; color: #1a1a2e; }
+  .uid { font-size: 11px; color: #9D9DB0; margin-top: 2px; }
+  .u-icons { display: flex; gap: 10px; }
+  .u-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(91,111,230,0.08);
+    display: flex; align-items: center; justify-content: center; font-size: 16px;
+  }
+
+  .stats-2 { display: flex; gap: 10px; padding: 0 16px; margin-top: 8px; }
+  .stat-2 { flex: 1; text-align: center; padding: 18px 12px; }
+  .stat-2 .sw { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 0 auto 6px; }
+  .stat-2 .sv { font-size: 22px; font-weight: 800; color: #1a1a2e; }
+  .stat-2 .sl { font-size: 11px; color: #9D9DB0; }
+
+  .sec-lbl { font-size: 13px; font-weight: 600; color: #9D9DB0; padding: 24px 20px 10px; display: block; }
+
+  .feat-scroll { display: flex; gap: 16px; padding: 0 16px; overflow-x: auto; }
+  .feat-scroll::-webkit-scrollbar { display: none; }
+  .feat-item { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 72px; }
+  .feat-av { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff; }
+  .feat-n { font-size: 11px; color: #6B6B80; white-space: nowrap; }
+
+  .menu-q { margin: 0 16px; padding: 4px 16px; }
+  .menu-q-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 4px; border-bottom: 1px solid rgba(200,196,216,0.15);
+  }
+  .menu-q-item:last-child { border-bottom: none; }
+  .menu-q-l { display: flex; align-items: center; gap: 10px; }
+  .menu-q-i { width: 34px; height: 34px; border-radius: 50%; background: rgba(91,111,230,0.08); display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .menu-q-t { font-size: 14px; color: #1a1a2e; }
+  .menu-q-ar { color: #C8C8D8; font-size: 16px; }
+
+  /* ======================
+     PAGE 4: SUMMARY
+     ====================== */
+  .sc { margin: 4px 16px; padding: 28px 24px; text-align: center; }
+  .sc-icon { font-size: 36px; display: block; margin-bottom: 8px; }
+  .sc-title { font-size: 20px; font-weight: 800; color: #1a1a2e; display: block; }
+  .sc-tag { display: inline-block; padding: 2px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; margin: 8px 0 12px; }
+  .sc-tag.try { background: rgba(52,196,114,0.15); color: #34C472; }
+  .sc-desc { font-size: 13px; color: #6B6B80; line-height: 1.6; display: block; margin-bottom: 16px; }
+
+  .footer-note { text-align: center; padding: 16px; font-size: 11px; color: #B0B0C8; }
+</style>
+</head>
+<body>
+  <div class="header-title">芥子 SUMERU</div>
+  <div class="header-sub">玻璃拟态风格 · 5 个核心页面</div>
+
+  <div class="page-selector">
+    <button data-page="0" class="sel">首页</button>
+    <button data-page="1">验证报告</button>
+    <button data-page="2">充值</button>
+    <button data-page="3">个人中心</button>
+    <button data-page="4">验证摘要</button>
+  </div>
+
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="page-container">
+
+      <!-- PAGE 0: HOME -->
+      <div class="page active" id="page0">
+        <div class="blob-container"><div class="blob blob-blue"></div><div class="blob blob-purple"></div></div>
+        <div class="page-content" style="padding-top:8px;">
+          <div class="hero-eyebrow"><span class="dot"></span><span>AI 驱动 · 实时市场分析</span></div>
+          <div class="hero-title">验证你的<br>产品想法</div>
+          <div class="hero-desc">输入你的创意，AI 将在数秒内分析市场前景、竞争格局与可行性</div>
+          <div class="feature-strip">
+            <span class="feature-item">📊 市场分析</span><span class="feature-divider"></span>
+            <span class="feature-item">🏆 竞品洞察</span><span class="feature-divider"></span>
+            <span class="feature-item">⚡ 实时生成</span>
+          </div>
+          <div class="glass-card input-card">
+            <textarea placeholder="输入你的产品想法，例如：一个帮助独立开发者快速验证产品 idea 的 AI 工具…">一个帮助独立开发者快速验证产品 idea 的 AI 工具</textarea>
+            <div class="input-bottom"><span class="char-count">56 / 500</span><button class="send-btn">→</button></div>
+          </div>
+          <div class="caps-strip">
+            <span>市场前景</span><span class="dot-div"></span><span>竞品分析</span><span class="dot-div"></span><span>SWOT</span><span class="dot-div"></span><span>风险提示</span>
+          </div>
+          <div class="chips">
+            <span class="chip">💡 AI 绘画工具</span><span class="chip">📱 社交应用</span>
+            <span class="chip">🛒 电商平台</span><span class="chip">🔧 开发者工具</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 1: REPORT -->
+      <div class="page" id="page1">
+        <div class="blob-container"><div class="blob blob-blue" style="top:0;right:-20%;width:200px;height:200px"></div><div class="blob blob-purple" style="bottom:20%;left:-15%;width:175px;height:175px"></div></div>
+        <div class="page-content" style="padding-top:8px;">
+          <div class="verdict-banner try">
+            <span class="v-title">建议尝试</span>
+            <span class="v-reason">市场前景广阔，竞争格局分散，存在明确的差异化空间</span>
+          </div>
+          <div class="glass-card">
+            <div class="summary-grid">
+              <div class="summary-item glass-light"><span class="summary-icon">📊</span><span class="summary-value">82%</span><span class="summary-label">市场前景</span></div>
+              <div class="summary-item glass-light"><span class="summary-icon">🔧</span><span class="summary-value">75%</span><span class="summary-label">技术可行性</span></div>
+              <div class="summary-item glass-light"><span class="summary-icon">🏆</span><span class="summary-value">12</span><span class="summary-label">竞品数量</span></div>
+              <div class="summary-item glass-light"><span class="summary-icon">⚡</span><span class="summary-value">6 月</span><span class="summary-label">MVP 周期</span></div>
+            </div>
+          </div>
+          <div class="glass-card">
+            <div class="section-head"><span class="section-icon">📊</span><span class="section-title">综合评分</span></div>
+            <div class="s-row"><span class="s-lbl">市场前景</span><div class="s-bar-bg"><div class="s-bar-fill" style="width:82%"></div></div><span class="s-num">8.2</span></div>
+            <div class="s-row"><span class="s-lbl">开发可行性</span><div class="s-bar-bg"><div class="s-bar-fill green" style="width:75%"></div></div><span class="s-num">7.5</span></div>
+          </div>
+          <div class="glass-card">
+            <div class="section-head"><span class="section-icon">📈</span><span class="section-title">细项评分</span></div>
+            <div class="d-row"><span class="d-lbl">市场规模</span><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></div></div>
+            <div class="d-row"><span class="d-lbl">增长趋势</span><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span></div></div>
+            <div class="d-row"><span class="d-lbl">竞争强度</span><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div></div>
+            <div class="d-row"><span class="d-lbl">技术门槛</span><span><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div></span></div>
+          </div>
+          <div class="glass-card">
+            <div class="section-head"><span class="section-icon">🏆</span><span class="section-title">竞品分析</span></div>
+            <div class="comp-item"><span class="comp-name">Product Hunt</span><span class="comp-desc">社区驱动，缺乏自动化分析能力</span></div>
+            <div class="comp-item"><span class="comp-name">Google Trends</span><span class="comp-desc">数据全面但无 actionable 建议</span></div>
+            <div class="comp-item"><span class="comp-name">Crunchbase</span><span class="comp-desc">面向投资者，不适合独立开发者快速验证</span></div>
+          </div>
+          <div class="glass-card">
+            <div class="section-head"><span class="section-icon">🔍</span><span class="section-title">SWOT 分析</span></div>
+            <div class="swot">
+              <div class="swot-cell swot-s"><span class="swot-lbl">✅ 优势</span><span class="swot-item">• AI 实时分析能力</span><span class="swot-item">• 极低使用门槛</span></div>
+              <div class="swot-cell swot-w"><span class="swot-lbl">⚠️ 劣势</span><span class="swot-item">• 数据深度有限</span><span class="swot-item">• 品牌认知度低</span></div>
+              <div class="swot-cell swot-o"><span class="swot-lbl">💡 机会</span><span class="swot-item">• 独立开发者生态增长</span><span class="swot-item">• AI 工具需求爆发</span></div>
+              <div class="swot-cell swot-t"><span class="swot-lbl">🚨 威胁</span><span class="swot-item">• 大厂入场</span><span class="swot-item">• 用户付费意愿不确定</span></div>
+            </div>
+          </div>
+          <div class="glass-card risk-card">
+            <div class="section-head"><span style="font-size:18px">⚠️</span><span class="risk-title">风险提示</span></div>
+            <div class="risk-item"><span class="risk-bullet">•</span><span>市场教育成本较高，需投入内容营销</span></div>
+            <div class="risk-item"><span class="risk-bullet">•</span><span>AI 生成结果的准确性和可信度需持续验证</span></div>
+            <div class="risk-item"><span class="risk-bullet">•</span><span>竞品可能快速跟进相似功能</span></div>
+          </div>
+          <div class="btn-w">
+            <button class="btn-p btn-fill">生成 PRD（需 2 积分）</button>
+            <button class="btn-p btn-out">分享卡片</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 2: PRICING -->
+      <div class="page" id="page2">
+        <div class="blob-container"><div class="blob blob-blue" style="top:0;right:-20%;width:200px;height:200px"></div><div class="blob blob-purple" style="bottom:10%;left:-15%;width:175px;height:175px"></div></div>
+        <div class="page-content" style="padding-top:8px;">
+          <div class="balance-area"><span class="b-label">当前剩余</span><span class="b-count">6</span><span class="b-unit">次</span></div>
+          <div class="plan-h"><span class="plan-h-title">选择套餐</span></div>
+          <div class="glass-card plan-c">
+            <div class="plan-badge">推荐</div>
+            <div class="plan-info"><span class="plan-n">标准版</span><span class="plan-cr">20 次验证</span></div>
+            <div class="plan-pr-area"><span class="plan-pr">¥29.9</span><span class="plan-pp">1.5 元/次</span></div>
+            <div class="plan-chk"><span class="chk">✓</span></div>
+          </div>
+          <div class="glass-card plan-c sel">
+            <div class="plan-info"><span class="plan-n">专业版</span><span class="plan-cr">50 次 · 含 PRD 生成</span></div>
+            <div class="plan-pr-area"><span class="plan-pr">¥69.9</span><span class="plan-pp">1.4 元/次</span></div>
+            <div class="plan-chk on"><span class="chk">✓</span></div>
+          </div>
+          <div class="glass-card plan-c">
+            <div class="plan-info"><span class="plan-n">无限版</span><span class="plan-cr">不限次数 · 全部功能</span></div>
+            <div class="plan-pr-area"><span class="plan-pr">¥199</span><span class="plan-pp">/月</span></div>
+            <div class="plan-chk"><span class="chk">✓</span></div>
+          </div>
+          <div class="plan-h"><span class="plan-h-title">加油包</span></div>
+          <div class="topup-row">
+            <div class="glass-card topup-c"><span class="topup-n">小份</span><span class="topup-cr">10 次</span><span class="topup-pr">¥14.9</span></div>
+            <div class="glass-card topup-c sel"><span class="topup-n">大份</span><span class="topup-cr">30 次</span><span class="topup-pr">¥39.9</span></div>
+          </div>
+          <div class="pay-w"><button class="pay-b">立即支付 ¥69.9</button></div>
+        </div>
+      </div>
+
+      <!-- PAGE 3: PROFILE -->
+      <div class="page" id="page3">
+        <div class="blob-container"><div class="blob blob-blue" style="top:-5%;right:-20%;width:220px;height:220px"></div><div class="blob blob-purple" style="bottom:10%;left:-15%;width:190px;height:190px"></div></div>
+        <div class="page-content" style="padding-top:8px;">
+          <div class="glass-card user-area">
+            <div class="user-l">
+              <div class="avatar">J</div>
+              <div><div class="uname">蒋燕</div><div class="uid">ID: 10086</div></div>
+            </div>
+            <div class="u-icons"><span class="u-icon">🔔</span><span class="u-icon">⚙</span></div>
+          </div>
+          <div class="stats-2">
+            <div class="glass-card stat-2"><div class="sw" style="background:rgba(91,111,230,0.12);color:#5B6FE6">✦</div><div class="sv">6</div><div class="sl">剩余验证次数</div></div>
+            <div class="glass-card stat-2"><div class="sw" style="background:rgba(52,196,114,0.12);color:#34C472">📋</div><div class="sv">23</div><div class="sl">验证报告</div></div>
+          </div>
+          <span class="sec-lbl">功能入口</span>
+          <div class="feat-scroll">
+            <div class="feat-item"><div class="feat-av gradient-primary">✦</div><span class="feat-n">购买积分</span></div>
+            <div class="feat-item"><div class="feat-av" style="background:linear-gradient(135deg,#34C472,#56D98A)">📋</div><span class="feat-n">验证历史</span></div>
+            <div class="feat-item"><div class="feat-av" style="background:linear-gradient(135deg,#F59E6B,#F7B84D)">💬</div><span class="feat-n">联系我们</span></div>
+            <div class="feat-item"><div class="feat-av" style="background:linear-gradient(135deg,#8B6FE8,#5B6FE6)">📤</div><span class="feat-n">分享应用</span></div>
+          </div>
+          <span class="sec-lbl">设置</span>
+          <div class="glass-card menu-q">
+            <div class="menu-q-item"><div class="menu-q-l"><span class="menu-q-i">🔔</span><span class="menu-q-t">消息通知</span></div><span class="menu-q-ar">›</span></div>
+            <div class="menu-q-item"><div class="menu-q-l"><span class="menu-q-i">🔒</span><span class="menu-q-t">隐私设置</span></div><span class="menu-q-ar">›</span></div>
+            <div class="menu-q-item"><div class="menu-q-l"><span class="menu-q-i">💳</span><span class="menu-q-t">支付管理</span></div><span class="menu-q-ar">›</span></div>
+            <div class="menu-q-item"><div class="menu-q-l"><span class="menu-q-i">ℹ️</span><span class="menu-q-t">关于芥子</span></div><span class="menu-q-ar">›</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 4: SUMMARY -->
+      <div class="page" id="page4">
+        <div class="blob-container"><div class="blob blob-blue" style="top:5%;right:-20%;width:200px;height:200px"></div><div class="blob blob-purple" style="bottom:10%;left:-15%;width:175px;height:175px"></div></div>
+        <div class="page-content" style="padding-top:8px;">
+          <div class="glass-card sc">
+            <span class="sc-icon">💡</span>
+            <span class="sc-title">AI 驱动的产品验证工具</span>
+            <span class="sc-tag try">建议尝试</span>
+            <span class="sc-desc">市场前景广阔，竞品分散，AI 赋能独立开发者快速验证产品想法，差异化空间明确。</span>
+            <button class="btn-p btn-fill" style="margin-bottom:8px">查看完整报告</button>
+            <button class="btn-p btn-out">生成 PRD</button>
+          </div>
+          <div class="footer-note">AI 分析结果仅供参考，建议结合实地调研综合判断</div>
+          <div class="btn-w"><button class="btn-p btn-out">返回首页</button></div>
+        </div>
+      </div>
+
+    </div><!-- /page-container -->
+
+    <div class="tab-bar">
+      <button class="tab-item" data-page="0"><span class="tab-icon">🔍</span><span class="tab-label">验证</span></button>
+      <button class="tab-item" data-page="1"><span class="tab-icon">📊</span><span class="tab-label">报告</span></button>
+      <button class="tab-item" data-page="2"><span class="tab-icon">💎</span><span class="tab-label">充值</span></button>
+      <button class="tab-item" data-page="3"><span class="tab-icon">👤</span><span class="tab-label">我的</span></button>
+    </div>
+  </div>
+
+<script>
+  function switchPage(idx) {
+    document.querySelectorAll('.page').forEach((p,i) => p.classList.toggle('active', i === idx));
+    document.querySelectorAll('.tab-item').forEach((t,i) => t.classList.toggle('active', i === idx));
+    document.querySelectorAll('.page-selector button').forEach((b,i) => b.classList.toggle('sel', i === idx));
+  }
+  document.querySelectorAll('.tab-item, .page-selector button').forEach(el => {
+    el.addEventListener('click', () => switchPage(parseInt(el.dataset.page)));
+  });
+  document.querySelector('.tab-item').classList.add('active');
+</script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+.page {
+  height: 100vh;
+  background: transparent;
+  position: relative;
+  padding-bottom: 48rpx;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 180rpx;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Centered card (loading / empty) ── */
+.card-lg {
+  margin: 16rpx 24rpx;
+  border-radius: 32rpx;
+  padding: 64rpx 32rpx;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8rpx 40rpx rgba(91, 111, 230, 0.08);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ── PRD content card ── */
+.prd-card {
+  margin: 16rpx 24rpx;
+  border-radius: 32rpx;
+  padding: 32rpx;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8rpx 40rpx rgba(91, 111, 230, 0.08);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.prd-header {
+  margin: 16rpx 24rpx;
+  border-radius: 32rpx;
+  padding: 48rpx 32rpx;
+  background: linear-gradient(135deg, #5B6FE6, #8B6FE8);
+  border: 2rpx solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8rpx 40rpx rgba(91, 111, 230, 0.08);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.prd-header-name {
+  font-size: 40rpx;
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+}
+
+.prd-header-tagline {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ── Loading / Empty ── */
+.loading-wrap, .empty-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24rpx;
+}
+.empty-icon { font-size: 64rpx; }
+.empty-text { text-align: center; color: #9D9DB0; font-size: 26rpx; }
+.loading-text { text-align: center; color: #9D9DB0; font-size: 26rpx; margin-top: 16rpx; }
+
+.loading-spinner {
+  width: 48rpx; height: 48rpx;
+  border: 4rpx solid rgba(91, 111, 230, 0.15);
+  border-top-color: #5B6FE6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Section Head ── */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.section-icon {
+  font-size: 28rpx;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1a1a2e;
+  flex-shrink: 0;
+}
+
+/* ── Body Text ── */
+.body-text {
+  font-size: 26rpx;
+  line-height: 1.7;
+  color: #6B6B80;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.list-item {
+  margin-bottom: 4rpx;
+}
+
+/* ── Feature Items ── */
+.feature-item {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 8rpx;
+  border: 2rpx solid rgba(232, 231, 240, 0.4);
+}
+
+.feature-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1a1a2e;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.feature-desc {
+  font-size: 24rpx;
+  color: #6B6B80;
+  line-height: 1.6;
+  display: block;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ── Priority Badges ── */
+.prd-priority {
+  font-size: 24rpx;
+  font-weight: 700;
+  display: inline-block;
+  margin: 16rpx 0 12rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 999px;
+}
+
+.prd-p0 { background: #FFE8E8; color: #C22A2A; }
+.prd-p1 { background: #FFF3E8; color: #C4702A; }
+.prd-p2 { background: rgba(91,111,230,0.1); color: #5B6FE6; }
+
+/* ── Data Models ── */
+.data-model-item {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 8rpx;
+  border: 2rpx solid rgba(232, 231, 240, 0.4);
+}
+
+.data-model-entity {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1a1a2e;
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.data-model-fields {
+  font-size: 24rpx;
+  color: #6B6B80;
+  line-height: 1.6;
+  display: block;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ── Debug ── */
+.debug-json {
+  font-size: 20rpx;
+  font-family: monospace;
+  color: #6B6B80;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.5;
+  background: rgba(200,196,216,0.1);
+  padding: 16rpx;
+  border-radius: 12rpx;
+  max-height: 600rpx;
+  overflow-y: auto;
+}
+
+
+.mt-lg { margin-top: 48rpx; }

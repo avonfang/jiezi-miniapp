@@ -1,0 +1,135 @@
+<scroll-view class="page" scroll-y>
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:0;right:-20%;width:400rpx;height:400rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:20%;left:-15%;width:350rpx;height:350rpx"></view>
+  </view>
+
+  <view class="page-content">
+    <view wx:if="{{loading}}" class="card-lg"><!-- Loading -->
+      <view class="loading-wrap">
+        <loading-timeline-prd step="{{timelineStep}}" />
+        <text class="loading-text">{{loadingText}}</text>
+      </view>
+    </view>
+
+    <view wx:elif="{{!prd}}" class="card-lg"><!-- Empty state -->
+      <view class="empty-wrap">
+        <text class="empty-icon">📄</text>
+        <text class="empty-text">还没有 PRD 数据</text>
+        <button class="btn-p btn-fill mt-lg" bindtap="generatePrd" disabled="{{generating}}">
+          {{generating ? '生成中...' : '生成 PRD（需 2 积分）'}}
+        </button>
+      </view>
+    </view>
+
+    <view wx:elif="{{prd}}"><!-- PRD Content -->
+      <!-- Header -->
+      <view class="prd-header">
+        <text class="prd-header-name">{{prd.productName}}</text>
+        <text wx:if="{{prd.oneLiner}}" class="prd-header-tagline">{{prd.oneLiner}}</text>
+      </view>
+
+      <!-- Positioning -->
+      <view class="prd-card" wx:if="{{prd.positioning}}">
+        <view class="section-head">
+          <text class="section-icon">🎯</text>
+          <text class="section-title">产品定位</text>
+        </view>
+        <view class="body-text">{{prd.positioning}}</view>
+      </view>
+
+      <!-- Target Users -->
+      <view class="prd-card" wx:if="{{prd.targetUsers}}">
+        <view class="section-head">
+          <text class="section-icon">👥</text>
+          <text class="section-title">目标用户</text>
+        </view>
+        <view class="body-text">{{prd.targetUsers}}</view>
+      </view>
+
+      <!-- User Story -->
+      <view class="prd-card" wx:if="{{prd.userStory}}">
+        <view class="section-head">
+          <text class="section-icon">📖</text>
+          <text class="section-title">用户故事</text>
+        </view>
+        <view class="body-text">{{prd.userStory}}</view>
+      </view>
+
+      <!-- Features -->
+      <view class="prd-card" wx:if="{{prd.hasFeatures}}">
+        <view class="section-head">
+          <text class="section-icon">⚡</text>
+          <text class="section-title">功能列表</text>
+        </view>
+        <view wx:if="{{prd.featuresP0.length}}">
+          <view class="prd-priority prd-p0">P0 · 核心功能</view>
+          <view wx:for="{{prd.featuresP0}}" wx:for-item="f" wx:key="name" class="feature-item">
+            <text class="feature-name">{{f.name}}</text>
+            <text wx:if="{{f.description}}" class="feature-desc">{{f.description}}</text>
+          </view>
+        </view>
+        <view wx:if="{{prd.featuresP1.length}}">
+          <view class="prd-priority prd-p1">P1 · 重要</view>
+          <view wx:for="{{prd.featuresP1}}" wx:for-item="f" wx:key="name" class="feature-item">
+            <text class="feature-name">{{f.name}}</text>
+            <text wx:if="{{f.description}}" class="feature-desc">{{f.description}}</text>
+          </view>
+        </view>
+        <view wx:if="{{prd.featuresP2.length}}">
+          <view class="prd-priority prd-p2">P2 · 锦上添花</view>
+          <view wx:for="{{prd.featuresP2}}" wx:for-item="f" wx:key="name" class="feature-item">
+            <text class="feature-name">{{f.name}}</text>
+            <text wx:if="{{f.description}}" class="feature-desc">{{f.description}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- User Flow -->
+      <view class="prd-card" wx:if="{{prd.userFlow}}">
+        <view class="section-head">
+          <text class="section-icon">🔄</text>
+          <text class="section-title">用户流程</text>
+        </view>
+        <view class="body-text">{{prd.userFlow}}</view>
+      </view>
+
+      <!-- Data Models -->
+      <view class="prd-card" wx:if="{{prd.dataModels.length}}">
+        <view class="section-head">
+          <text class="section-icon">🗃️</text>
+          <text class="section-title">数据模型</text>
+        </view>
+        <view wx:for="{{prd.dataModels}}" wx:for-item="m" wx:key="entity" class="data-model-item">
+          <text class="data-model-entity">{{m.entity}}</text>
+          <text wx:if="{{m.fields}}" class="data-model-fields">{{m.fields}}</text>
+        </view>
+      </view>
+
+      <!-- Tech Stack -->
+      <view class="prd-card" wx:if="{{prd.techStack}}">
+        <view class="section-head">
+          <text class="section-icon">🛠</text>
+          <text class="section-title">技术栈建议</text>
+        </view>
+        <view class="body-text">{{prd.techStack}}</view>
+      </view>
+
+      <!-- Next Steps -->
+      <view class="prd-card" wx:if="{{prd.nextSteps.length}}">
+        <view class="section-head">
+          <text class="section-icon">📋</text>
+          <text class="section-title">下一步行动</text>
+        </view>
+        <view wx:for="{{prd.nextSteps}}" wx:for-item="step" wx:key="*this" class="body-text list-item">• {{step}}</view>
+      </view>
+
+      <!-- Actions -->
+      <view class="btn-w">
+        <button class="btn-p btn-fill" bindtap="goPreview">{{hasPreview ? '查看产品预览' : '生成产品预览（需 3 积分）'}}</button>
+        <button class="btn-p btn-out" bindtap="goBack">返回报告</button>
+      </view>
+    </view>
+  </view>
+  </scroll-view>
+  <bottom-tab activeTab="" />

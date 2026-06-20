@@ -1,0 +1,53 @@
+<view class="page">
+
+  <!-- Background blobs -->
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:-10%;right:-20%;width:500rpx;height:500rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:10%;left:-15%;width:400rpx;height:400rpx"></view>
+  </view>
+
+  <!-- Header -->
+  <view class="cu-header">
+    <text class="cu-header-title">联系我们</text>
+    <text class="cu-header-desc">任何问题或建议，欢迎联系我们</text>
+  </view>
+
+  <!-- Contact Cards -->
+  <view class="cu-card" bindtap="onContactCopy" data-text="芥子-AI产品">
+    <view class="cu-card-icon">💬</view>
+    <view class="cu-card-body">
+      <text class="cu-card-label">微信公众号</text>
+      <text class="cu-card-value">芥子-AI产品</text>
+      <text class="cu-card-hint">点击复制公众号名称</text>
+    </view>
+  </view>
+
+  <view class="cu-card" bindtap="onContactCopy" data-text="sumerujiezi@163.com">
+    <view class="cu-card-icon">✉️</view>
+    <view class="cu-card-body">
+      <text class="cu-card-label">联系邮箱</text>
+      <text class="cu-card-value">sumerujiezi@163.com</text>
+      <text class="cu-card-hint">点击复制邮箱地址</text>
+    </view>
+  </view>
+
+  <view class="cu-card" bindtap="onContactCopy" data-text="jiezi_ai">
+    <view class="cu-card-icon">👤</view>
+    <view class="cu-card-body">
+      <text class="cu-card-label">客服微信</text>
+      <text class="cu-card-value">jiezi_ai</text>
+      <text class="cu-card-hint">点击复制微信号，添加好友咨询</text>
+    </view>
+  </view>
+
+  <view class="cu-card" bindtap="onSiteTap">
+    <view class="cu-card-icon">🌐</view>
+    <view class="cu-card-body">
+      <text class="cu-card-label">官网</text>
+      <text class="cu-card-value">jiezi.site</text>
+      <text class="cu-card-hint">点击访问官网</text>
+    </view>
+  </view>
+
+  <bottom-tab activeTab="" />
+</view>

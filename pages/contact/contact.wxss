@@ -1,0 +1,233 @@
+.page {
+  min-height: 100vh;
+  background: transparent;
+  padding-bottom: 160rpx;
+  position: relative;
+}
+
+/* ── Header ── */
+.c-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 32rpx 16rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.c-header-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.c-publish-btn {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 14rpx 28rpx;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+.c-publish-btn:active {
+  opacity: 0.85;
+}
+
+/* ── Tabs ── */
+.c-tabs {
+  display: flex;
+  gap: 16rpx;
+  padding: 0 32rpx 20rpx;
+  position: relative;
+  z-index: 1;
+  flex-wrap: nowrap;
+}
+
+.c-tab {
+  font-size: 24rpx;
+  color: var(--color-text-muted);
+  padding: 12rpx 28rpx;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.6);
+  border: 1rpx solid rgba(200,196,216,0.3);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.c-tab.active {
+  color: #fff;
+  background: linear-gradient(135deg, #5B6FE6 0%, #8B6FE8 100%);
+  border-color: transparent;
+  font-weight: 600;
+}
+
+/* ── Card Base ── */
+.c-card {
+  margin: 0 24rpx 20rpx;
+  border-radius: var(--radius-md);
+  padding: 28rpx 32rpx;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12rpx);
+  -webkit-backdrop-filter: blur(12rpx);
+  border: 1rpx solid rgba(255,255,255,0.4);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  z-index: 1;
+}
+
+.c-card:active {
+  transform: scale(0.99);
+}
+
+.c-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8rpx;
+  height: 100%;
+  border-radius: 8rpx 0 0 8rpx;
+}
+
+.c-card-accent.orange { background: #ff9f43; }
+.c-card-accent.blue { background: #54a0ff; }
+.c-card-accent.green { background: #1dd1a1; }
+
+/* ── Tags ── */
+.c-tag-row {
+  display: flex;
+  gap: 10rpx;
+  margin-bottom: 12rpx;
+  flex-wrap: wrap;
+}
+
+.c-tag {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+  background: #f0f2f5;
+  color: #666;
+  line-height: 1.4;
+}
+
+.c-tag.hot { background: #fff0f0; color: #ff4d4f; }
+.c-tag.dev { background: #e3f2fd; color: #1976d2; }
+.c-tag.live { background: #e8f5e9; color: #2e7d32; }
+
+/* ── Card Content ── */
+.c-card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.45;
+  margin-bottom: 10rpx;
+}
+
+.c-card-desc {
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16rpx;
+}
+
+/* ── Interaction Bar ── */
+.c-interaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1rpx dashed rgba(200,196,216,0.35);
+  padding-top: 16rpx;
+  font-size: 22rpx;
+  color: #B0AEC0;
+}
+
+.c-interaction-btn {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* ── Project Progress ── */
+.c-progress {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14rpx;
+  gap: 12rpx;
+}
+
+.c-progress-label {
+  font-size: 22rpx;
+  color: #54a0ff;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.c-progress-track {
+  flex: 1;
+  height: 8rpx;
+  background: #eef2f7;
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+
+.c-progress-fill {
+  height: 100%;
+  border-radius: 4rpx;
+  background: #54a0ff;
+}
+
+.c-roles {
+  display: flex;
+  gap: 10rpx;
+  flex-wrap: wrap;
+}
+
+.c-role-tag {
+  font-size: 20rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 999px;
+  border: 1rpx solid #d1d9e6;
+  color: var(--color-primary);
+  line-height: 1.4;
+}
+
+/* ── Showcase Data Grid ── */
+.c-data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12rpx;
+  background: #f8f9fa;
+  padding: 16rpx;
+  border-radius: var(--radius-sm);
+  margin-bottom: 14rpx;
+}
+
+.c-data-item {
+  text-align: center;
+}
+
+.c-data-value {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.c-data-label {
+  font-size: 20rpx;
+  color: #888;
+  margin-top: 2rpx;
+}
+
+/* ── Empty State ── */
+.c-empty {
+  text-align: center;
+  padding: 80rpx 32rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.c-empty-text {
+  font-size: 28rpx;
+  color: var(--color-text-muted);
+}

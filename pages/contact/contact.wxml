@@ -1,0 +1,77 @@
+<view class="page">
+
+  <!-- Background blobs -->
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:-5%;right:-15%;width:400rpx;height:400rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:20%;left:-20%;width:350rpx;height:350rpx"></view>
+  </view>
+
+  <!-- Header -->
+  <view class="c-header">
+    <text class="c-header-title">社区广场</text>
+    <view class="c-publish-btn" bindtap="onPublish">+ 发起</view>
+  </view>
+
+  <!-- Tabs -->
+  <view class="c-tabs">
+    <view wx:for="{{tabs}}" wx:key="key"
+      class="c-tab {{activeTab === item.key ? 'active' : ''}}"
+      data-key="{{item.key}}" bindtap="switchTab"
+    >{{item.label}}</view>
+  </view>
+
+  <!-- Post List -->
+  <view wx:if="{{filteredPosts.length > 0}}">
+    <view wx:for="{{filteredPosts}}" wx:for-item="post" wx:key="id" class="c-card" data-id="{{post.id}}" bindtap="onCardTap">
+
+      <!-- Accent line -->
+      <view class="c-card-accent {{post.accent}}"></view>
+
+      <!-- Tags -->
+      <view class="c-tag-row">
+        <view wx:for="{{post.tags}}" wx:key="index">
+          <text class="c-tag {{item.class || ''}}">{{item.label || item}}</text>
+        </view>
+      </view>
+
+      <!-- Title & Description -->
+      <view class="c-card-title">{{post.title}}</view>
+      <view class="c-card-desc">{{post.desc}}</view>
+
+      <!-- Project: Progress -->
+      <view wx:if="{{post.type === 'project'}}" class="c-progress">
+        <text class="c-progress-label">进度 {{post.progress}}%</text>
+        <view class="c-progress-track">
+          <view class="c-progress-fill" style="width:{{post.progress}}%"></view>
+        </view>
+      </view>
+
+      <!-- Project: Roles -->
+      <view wx:if="{{post.roles && post.roles.length}}" class="c-roles">
+        <text wx:for="{{post.roles}}" wx:key="index" class="c-role-tag">{{item}}</text>
+      </view>
+
+      <!-- Showcase: Data Grid -->
+      <view wx:if="{{post.dataPoints && post.dataPoints.length}}" class="c-data-grid">
+        <view wx:for="{{post.dataPoints}}" wx:key="label" class="c-data-item">
+          <view class="c-data-value">{{item.value}}</view>
+          <view class="c-data-label">{{item.label}}</view>
+        </view>
+      </view>
+
+      <!-- Interaction Bar -->
+      <view class="c-interaction">
+        <text>{{post.author}}</text>
+        <text class="c-interaction-btn">{{post.actionText}}</text>
+      </view>
+
+    </view>
+  </view>
+
+  <!-- Empty State -->
+  <view wx:else class="c-empty">
+    <text class="c-empty-text">暂无内容</text>
+  </view>
+
+  <bottom-tab activeTab="contact" />
+</view>

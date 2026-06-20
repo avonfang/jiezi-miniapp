@@ -1,0 +1,110 @@
+<scroll-view class="page" scroll-y>
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:-5%;right:-20%;width:450rpx;height:450rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:10%;left:-15%;width:380rpx;height:380rpx"></view>
+  </view>
+
+  <view class="page-content">
+    <!-- User area -->
+    <view class="glass-card user-area">
+      <view class="user-l">
+        <view class="avatar">{{initial}}</view>
+        <view>
+          <text class="uname">{{username}}</text>
+          <text class="uid">ID: {{userId}}</text>
+        </view>
+      </view>
+      <view class="u-icons">
+        <text class="u-icon">🔔</text>
+        <text class="u-icon">⚙</text>
+      </view>
+    </view>
+
+    <!-- Stats -->
+    <view class="stats-2">
+      <view class="glass-card stat-2">
+        <view class="sw" style="background:rgba(91,111,230,0.12);color:#5B6FE6">✦</view>
+        <text class="sv">{{balance}}</text>
+        <text class="sl">剩余积分</text>
+      </view>
+      <view class="glass-card stat-2">
+        <view class="sw" style="background:rgba(52,196,114,0.12);color:#34C472">📋</view>
+        <text class="sv">{{reportCount}}</text>
+        <text class="sl">验证报告</text>
+      </view>
+    </view>
+
+    <!-- Feature entries -->
+    <text class="sec-lbl">功能入口</text>
+    <scroll-view class="feat-scroll" scroll-x show-scrollbar="{{false}}">
+      <view class="feat-item" bindtap="goPricing">
+        <view class="feat-av gradient-primary">✦</view>
+        <text class="feat-n">购买积分</text>
+      </view>
+      <view class="feat-item" bindtap="goHistory">
+        <view class="feat-av" style="background:linear-gradient(135deg,#34C472,#56D98A)">📋</view>
+        <text class="feat-n">验证历史</text>
+      </view>
+      <view class="feat-item" bindtap="goContact">
+        <view class="feat-av" style="background:linear-gradient(135deg,#F59E6B,#F7B84D)">💬</view>
+        <text class="feat-n">联系我们</text>
+      </view>
+      <button class="feat-item feat-btn-share" open-type="share">
+        <view class="feat-av" style="background:linear-gradient(135deg,#8B6FE8,#5B6FE6)">📤</view>
+        <text class="feat-n">分享应用</text>
+      </button>
+    </scroll-view>
+
+    <!-- Settings menu -->
+    <text class="sec-lbl">设置</text>
+    <view class="glass-card menu-q">
+      <view class="menu-q-item" bindtap="goHistory">
+        <view class="menu-q-l">
+          <text class="menu-q-i">📋</text>
+          <text class="menu-q-t">验证历史</text>
+        </view>
+        <text class="menu-q-ar">›</text>
+      </view>
+      <view class="menu-q-item" bindtap="goContact">
+        <view class="menu-q-l">
+          <text class="menu-q-i">💬</text>
+          <text class="menu-q-t">联系我们</text>
+        </view>
+        <text class="menu-q-ar">›</text>
+      </view>
+      <view class="menu-q-item" bindtap="goPricing">
+        <view class="menu-q-l">
+          <text class="menu-q-i">💳</text>
+          <text class="menu-q-t">支付管理</text>
+        </view>
+        <text class="menu-q-ar">›</text>
+      </view>
+      <view class="menu-q-item" bindtap="goAbout">
+        <view class="menu-q-l">
+          <text class="menu-q-i">ℹ️</text>
+          <text class="menu-q-t">关于芥子</text>
+        </view>
+        <text class="menu-q-ar">›</text>
+      </view>
+    </view>
+
+    <!-- History records -->
+    <text class="sec-lbl">验证记录</text>
+    <view class="history-list" wx:if="{{groupedHistory.length > 0}}">
+      <view class="time-group" wx:for="{{groupedHistory}}" wx:key="dateLabel">
+        <text class="time-label">{{item.dateLabel}}</text>
+        <view class="glass-card history-item" wx:for="{{item.items}}" wx:for-index="idx" wx:key="idx" bindtap="restoreItem" data-idea="{{item.idea}}">
+          <view class="hi-left">
+            <view class="hi-dot verdict-{{item.verdictClass}}"></view>
+            <text class="hi-title">{{item.idea}}</text>
+          </view>
+          <text class="hi-time">{{item.timeStr}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="glass-card empty-hint" wx:else>
+      <text>暂无验证记录</text>
+    </view>
+  </view>
+  <bottom-tab activeTab="" />
+</scroll-view>
