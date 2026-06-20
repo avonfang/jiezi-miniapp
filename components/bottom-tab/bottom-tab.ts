@@ -19,7 +19,7 @@ const ICONS: Record<string, string> = {
 const TAB_DEFS = [
   { key: 'validate', path: '/pages/index/index', icon: toDataUri(ICONS.validate, GRAY), iconSel: toDataUri(ICONS.validate, BRAND), label: '验证' },
   { key: 'history', path: '/pages/history/history', icon: toDataUri(ICONS.history, GRAY), iconSel: toDataUri(ICONS.history, BRAND), label: '历史' },
-  { key: 'contact', path: '/pages/contact/contact', icon: toDataUri(ICONS.contact, GRAY), iconSel: toDataUri(ICONS.contact, BRAND), label: '社区' },
+  { key: 'resources', path: '/pages/resources/resources', icon: toDataUri(ICONS.contact, GRAY), iconSel: toDataUri(ICONS.contact, BRAND), label: '资源' },
   { key: 'profile', path: '/pages/profile/profile', icon: toDataUri(ICONS.profile, GRAY), iconSel: toDataUri(ICONS.profile, BRAND), label: '我的' },
 ];
 

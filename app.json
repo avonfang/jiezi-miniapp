@@ -6,6 +6,7 @@
     "pages/preview/preview",
     "pages/preview/feature-detail/feature-detail",
     "pages/history/history",
+    "pages/resources/resources",
     "pages/profile/profile",
     "pages/settings/settings",
     "pages/pricing/pricing",

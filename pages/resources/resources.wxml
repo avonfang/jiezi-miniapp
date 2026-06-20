@@ -1,0 +1,61 @@
+<scroll-view class="page" scroll-y>
+  <view class="blob-container">
+    <view class="blob blob-blue animate-float" style="top:-5%;right:-15%;width:400rpx;height:400rpx"></view>
+    <view class="blob blob-purple animate-float-slow" style="bottom:20%;left:-20%;width:350rpx;height:350rpx"></view>
+  </view>
+
+  <!-- Header -->
+  <view class="r-header">
+    <text class="r-header-title">资源</text>
+    <text class="r-header-sub">开发者分享的实战经验与行业洞察</text>
+  </view>
+
+  <!-- Category tabs -->
+  <scroll-view class="r-cats" scroll-x show-scrollbar="{{false}}">
+    <view wx:for="{{categories}}" wx:key="key"
+      class="r-cat {{activeCat === item.key ? 'active' : ''}}"
+      data-key="{{item.key}}" bindtap="switchCat">
+      {{item.label}}
+    </view>
+  </scroll-view>
+
+  <!-- Article list -->
+  <view class="r-list">
+    <view wx:for="{{filteredArticles}}" wx:for-item="art" wx:key="id"
+      class="r-card glass-card animate-fade-up"
+      data-id="{{art.id}}" bindtap="onArticleTap"
+      style="animation-delay:{{index * 0.06}}s">
+
+      <!-- Category tag -->
+      <view class="r-cat-tag {{art.categoryClass}}">{{art.category}}</view>
+
+      <!-- Title -->
+      <view class="r-title">{{art.title}}</view>
+
+      <!-- Description -->
+      <view class="r-desc">{{art.desc}}</view>
+
+      <!-- Meta row -->
+      <view class="r-meta">
+        <view class="r-meta-left">
+          <view class="r-avatar">{{art.author.slice(0, 1)}}</view>
+          <view class="r-meta-info">
+            <text class="r-author">{{art.author}}</text>
+            <text class="r-date">{{art.date}} · {{art.readTime}}</text>
+          </view>
+        </view>
+        <view class="r-likes">
+          <text class="r-like-icon">♡</text>
+          <text class="r-like-count">{{art.likes >= 1000 ? (art.likes / 1000).toFixed(1) + 'k' : art.likes}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Empty state -->
+  <view wx:if="{{filteredArticles.length === 0}}" class="r-empty">
+    <text class="r-empty-text">该分类暂无文章</text>
+  </view>
+
+  <bottom-tab activeTab="resources" />
+</scroll-view>

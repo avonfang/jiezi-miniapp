@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "资源",
+  "usingComponents": {
+    "bottom-tab": "/components/bottom-tab/bottom-tab"
+  }
+}
