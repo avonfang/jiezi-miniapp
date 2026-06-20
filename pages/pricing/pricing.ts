@@ -68,6 +68,7 @@ Page({
       }>({
         path: '/api/wxpay/pay',
         data: { plan: this.data.selectedPlan, userId },
+        timeout: 15000, // 15s timeout — don't let user wait forever
       });
 
       wx.hideLoading();
@@ -115,6 +116,11 @@ Page({
       console.error('支付失败', err);
       // Extract meaningful error message
       let errMsg = '';
+      let isDevMode = false;
+      try {
+        isDevMode = wx.getAccountInfoSync().miniProgram.envVersion === 'develop';
+      } catch {}
+
       if (err.errMsg) {
         if (err.errMsg.includes('cancel') || err.errMsg.includes('Cancel')) {
           errMsg = '已取消支付';
@@ -128,6 +134,12 @@ Page({
       } else {
         errMsg = '支付失败，请重试';
       }
+
+      // Dev mode: add hint about local server
+      if (isDevMode && (errMsg.includes('网络错误') || errMsg.includes('fail') || err.code === 0)) {
+        errMsg = '开发模式：请确保本地后端已启动 (npm run dev)';
+      }
+
       wx.showToast({ title: errMsg.length > 20 ? errMsg.slice(0, 19) + '...' : errMsg, icon: 'none', duration: 3000 });
       this.setData({ paying: false });
     }
