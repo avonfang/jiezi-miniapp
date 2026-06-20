@@ -46,7 +46,7 @@
         </view>
         <view class="r-likes">
           <text class="r-like-icon">♡</text>
-          <text class="r-like-count">{{art.likes >= 1000 ? (art.likes / 1000).toFixed(1) + 'k' : art.likes}}</text>
+          <text class="r-like-count">{{art.likes}}</text>
         </view>
       </view>
     </view>

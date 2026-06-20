@@ -7,7 +7,11 @@ interface Article {
   author: string;
   date: string;
   readTime: string;
-  likes: number;
+  likes: string;
+}
+
+function fmtLikes(n: number): string {
+  return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n);
 }
 
 const ARTICLES: Article[] = [
@@ -20,7 +24,7 @@ const ARTICLES: Article[] = [
     author: '芥子团队',
     date: '2026.06.15',
     readTime: '8 分钟',
-    likes: 342,
+    likes: fmtLikes(342),
   },
   {
     id: '2',
@@ -31,7 +35,7 @@ const ARTICLES: Article[] = [
     author: '数据分析师 Leo',
     date: '2026.06.12',
     readTime: '12 分钟',
-    likes: 521,
+    likes: fmtLikes(521),
   },
   {
     id: '3',
@@ -42,7 +46,7 @@ const ARTICLES: Article[] = [
     author: '@独立开发者小王',
     date: '2026.06.08',
     readTime: '15 分钟',
-    likes: 897,
+    likes: fmtLikes(897),
   },
   {
     id: '4',
@@ -53,7 +57,7 @@ const ARTICLES: Article[] = [
     author: '全栈工程师 Alex',
     date: '2026.06.05',
     readTime: '10 分钟',
-    likes: 234,
+    likes: fmtLikes(234),
   },
   {
     id: '5',
@@ -64,7 +68,7 @@ const ARTICLES: Article[] = [
     author: '芥子团队',
     date: '2026.05.28',
     readTime: '6 分钟',
-    likes: 456,
+    likes: fmtLikes(456),
   },
   {
     id: '6',
@@ -75,7 +79,7 @@ const ARTICLES: Article[] = [
     author: '连续创业者 老张',
     date: '2026.05.20',
     readTime: '20 分钟',
-    likes: 1203,
+    likes: fmtLikes(1203),
   },
   {
     id: '7',
@@ -86,7 +90,7 @@ const ARTICLES: Article[] = [
     author: 'SaaS 观察者 Mia',
     date: '2026.05.15',
     readTime: '14 分钟',
-    likes: 678,
+    likes: fmtLikes(678),
   },
   {
     id: '8',
@@ -97,7 +101,7 @@ const ARTICLES: Article[] = [
     author: '@代码诗人',
     date: '2026.05.10',
     readTime: '8 分钟',
-    likes: 567,
+    likes: fmtLikes(567),
   },
   {
     id: '9',
@@ -108,7 +112,7 @@ const ARTICLES: Article[] = [
     author: '增长黑客 Joyce',
     date: '2026.05.05',
     readTime: '12 分钟',
-    likes: 934,
+    likes: fmtLikes(934),
   },
 ];
 
