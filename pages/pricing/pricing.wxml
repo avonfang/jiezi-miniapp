@@ -51,7 +51,8 @@
       <view class="glass-card qr-card">
         <text class="qr-title">微信扫码支付</text>
         <image class="qr-image" src="{{qrCode}}" mode="widthFix" lazy-load />
-        <text class="qr-hint">支付完成后请返回查看</text>
+        <text class="qr-hint">截屏保存二维码，用微信扫一扫支付</text>
+        <text wx:if="{{rawUrl}}" class="qr-url" selectable="true">或者复制链接到浏览器：{{rawUrl}}</text>
         <button class="btn-p btn-out" bindtap="goBack">返回首页</button>
       </view>
     </view>
