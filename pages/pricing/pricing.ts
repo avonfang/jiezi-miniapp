@@ -24,6 +24,7 @@ Page({
     paying: false,
     paySuccess: false,
     qrCode: '',
+    rawUrl: '',
   },
 
   onShow() {
@@ -65,6 +66,7 @@ Page({
         orderId?: string;
         payment?: { timeStamp: string; nonceStr: string; package: string; signType: string; paySign: string };
         qrCode?: string;
+        rawUrl?: string;
       }>({
         path: '/api/wxpay/pay',
         data: { plan: this.data.selectedPlan, userId },
@@ -100,7 +102,7 @@ Page({
         }
       } else if (res.qrCode) {
         // QR code mode (dev tools / desktop fallback)
-        this.setData({ qrCode: res.qrCode, paying: false });
+        this.setData({ qrCode: res.qrCode, rawUrl: res.rawUrl || '', paying: false });
         this.startPollPayment(res.orderId || '');
         return;
       }
