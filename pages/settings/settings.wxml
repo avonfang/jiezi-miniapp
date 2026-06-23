@@ -37,10 +37,6 @@
     <!-- Feature entries -->
     <text class="sec-lbl">功能入口</text>
     <scroll-view class="feat-scroll" scroll-x show-scrollbar="{{false}}">
-      <view class="feat-item" bindtap="goPricing">
-        <view class="feat-av gradient-primary">✦</view>
-        <text class="feat-n">购买积分</text>
-      </view>
       <view class="feat-item" bindtap="goHistory">
         <view class="feat-av" style="background:linear-gradient(135deg,#34C472,#56D98A)">📋</view>
         <text class="feat-n">验证历史</text>

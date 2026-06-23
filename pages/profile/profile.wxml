@@ -42,8 +42,6 @@
     <view class="credit-bar">
       <view class="credit-fill" style="width: {{barWidth}}%"></view>
     </view>
-    <text class="credit-hint" wx:if="{{balance < 5}}">积分不足，请及时购买</text>
-    <button class="btn-primary mt-md" bindtap="goPricing">购买积分</button>
   </view>
 
   <!-- ── Menu (Glass) ── -->

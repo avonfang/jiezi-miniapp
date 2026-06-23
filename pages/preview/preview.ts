@@ -220,12 +220,7 @@ Page({
 
       this.setData({ generating: false });
       if (err?.code === 402) {
-        wx.showModal({
-          title: '积分不足',
-          content: '生成预览需要 3 积分，是否前往充值？',
-          success: (r) => { if (r.confirm) wx.navigateTo({ url: '/pages/pricing/pricing' }); },
-        });
-        this.setData({ error: '积分不足，需要 3 积分' });
+        this.setData({ error: '积分不足，无法生成预览页' });
       } else {
         this.setData({ error: err?.data?.error || err?.message || '生成失败，请重试' });
         wx.showToast({ title: '生成失败', icon: 'none' });

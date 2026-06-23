@@ -33,7 +33,7 @@ App({
         this.globalData.userId = 'dev_user_001';
         this.globalData.token = '';
         this.globalData.username = '测试账号';
-        this.globalData.balance = 1000;
+        this.globalData.balance = 50;
         return;
       }
     } catch {}

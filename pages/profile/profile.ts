@@ -81,7 +81,7 @@ Page({
         this.setData({ showProfileEditor: true });
         wx.showModal({
           title: '🎉 欢迎加入芥子',
-          content: '请先完善资料（设置昵称），即可领取 20 积分奖励！',
+          content: '请先完善资料（设置昵称），即可领取 50 积分奖励！',
           showCancel: false,
         });
       } else {
@@ -157,7 +157,7 @@ Page({
         this.setData({ balance: Number(balance) || 0, barWidth: Math.min(((Number(balance) || 0) / MAX_CREDITS) * 100, 100) });
         wx.showModal({
           title: '🎉 奖励已发放',
-          content: '感谢完善资料！送你 20 积分体验 AI 产品验证，快去试试吧！',
+          content: '感谢完善资料！送你 50 积分体验 AI 产品验证，快去试试吧！',
           showCancel: false,
         });
       }

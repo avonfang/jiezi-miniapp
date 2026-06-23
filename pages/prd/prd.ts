@@ -109,11 +109,7 @@ Page({
       this.clearStepTimer();
       this.setData({ loading: false, generating: false });
       if (err?.code === 402) {
-        wx.showModal({
-          title: '积分不足',
-          content: '生成 PRD 需要 2 积分，是否前往充值？',
-          success: (r) => { if (r.confirm) wx.navigateTo({ url: '/pages/pricing/pricing' }); },
-        });
+        wx.showToast({ title: '积分不足，无法生成 PRD', icon: 'none' });
       } else {
         wx.showToast({ title: err?.data?.error || err?.message || '生成失败，请重试', icon: 'none' });
       }

@@ -152,9 +152,7 @@ Page({
       clearInterval(stepTimer);
       console.error('Validate error', err);
       if (err?.code === 402) {
-        wx.showModal({ title: '积分不足', content: '当前积分不足，是否前往充值？', success: (r) => {
-          if (r.confirm) wx.navigateTo({ url: '/pages/pricing/pricing' });
-        }});
+        wx.showToast({ title: '积分不足，请稍后再试', icon: 'none' });
       } else {
         this.setData({ error: err?.data?.error || err?.message || '验证失败，请稍后重试', loading: false });
       }
