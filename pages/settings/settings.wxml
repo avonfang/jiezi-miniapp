@@ -68,14 +68,7 @@
         </view>
         <text class="menu-q-ar">›</text>
       </view>
-      <view class="menu-q-item" bindtap="goPricing">
-        <view class="menu-q-l">
-          <text class="menu-q-i">💳</text>
-          <text class="menu-q-t">支付管理</text>
-        </view>
-        <text class="menu-q-ar">›</text>
-      </view>
-      <view class="menu-q-item" bindtap="goAbout">
+<view class="menu-q-item" bindtap="goAbout">
         <view class="menu-q-l">
           <text class="menu-q-i">ℹ️</text>
           <text class="menu-q-t">关于芥子</text>
